@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Region.json",
+  "title": "Region",
+  "type": "object",
+  "properties": {
+    "page_ordinal": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "page_label": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "x0": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "y0": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "x1": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "y1": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": [
+    "page_ordinal",
+    "x0",
+    "y0",
+    "x1",
+    "y1"
+  ],
+  "additionalProperties": false
+}

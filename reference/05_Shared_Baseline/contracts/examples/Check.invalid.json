@@ -1,0 +1,6 @@
+{
+  "kind": "json_equals",
+  "path": "x",
+  "expected": "x",
+  "undeclared_field": "must be rejected"
+}

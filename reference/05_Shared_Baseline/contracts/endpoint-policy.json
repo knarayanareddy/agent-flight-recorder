@@ -1,0 +1,482 @@
+[
+  {
+    "operation": "foundation_create_project",
+    "method": "POST",
+    "path": "/api/v1/projects",
+    "role": "admin",
+    "if_match": false,
+    "request": "ProjectCreate",
+    "response": "Project",
+    "success": 201
+  },
+  {
+    "operation": "foundation_list_projects",
+    "method": "GET",
+    "path": "/api/v1/projects",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "ProjectPage",
+    "success": 200
+  },
+  {
+    "operation": "foundation_create_upload",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/uploads",
+    "role": "analyst",
+    "if_match": false,
+    "request": "UploadCreate",
+    "response": "Upload",
+    "success": 201
+  },
+  {
+    "operation": "foundation_put_upload",
+    "method": "PUT",
+    "path": "/api/v1/uploads/{upload_id}/bytes",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Empty",
+    "success": 200
+  },
+  {
+    "operation": "foundation_finalize_upload",
+    "method": "POST",
+    "path": "/api/v1/uploads/{upload_id}:finalize",
+    "role": "analyst",
+    "if_match": false,
+    "request": "UploadFinalize",
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_get_artifact",
+    "method": "GET",
+    "path": "/api/v1/artifacts/{artifact_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_download_artifact",
+    "method": "GET",
+    "path": "/api/v1/artifacts/{artifact_id}/bytes",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_get_job",
+    "method": "GET",
+    "path": "/api/v1/jobs/{job_id}",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "Job",
+    "success": 200
+  },
+  {
+    "operation": "foundation_cancel_job",
+    "method": "POST",
+    "path": "/api/v1/jobs/{job_id}:cancel",
+    "role": "operator",
+    "if_match": false,
+    "request": "Empty",
+    "response": "Job",
+    "success": 202
+  },
+  {
+    "operation": "afr_ingest_events",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/events:batch",
+    "role": "operator",
+    "if_match": false,
+    "request": "EventBatch",
+    "response": "BatchReceipt",
+    "success": 202
+  },
+  {
+    "operation": "afr_list_runs",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/afr/runs",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "RunPage",
+    "success": 200
+  },
+  {
+    "operation": "afr_get_run",
+    "method": "GET",
+    "path": "/api/v1/afr/runs/{run_id}",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "Run",
+    "success": 200
+  },
+  {
+    "operation": "afr_list_events",
+    "method": "GET",
+    "path": "/api/v1/afr/runs/{run_id}/events",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "EventPage",
+    "success": 200
+  },
+  {
+    "operation": "afr_create_case",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/cases",
+    "role": "analyst",
+    "if_match": false,
+    "request": "CaseCreate",
+    "response": "Case",
+    "success": 201
+  },
+  {
+    "operation": "afr_get_case",
+    "method": "GET",
+    "path": "/api/v1/afr/cases/{case_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Case",
+    "success": 200
+  },
+  {
+    "operation": "afr_create_replay",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/replays",
+    "role": "operator",
+    "if_match": false,
+    "request": "ReplayCreate",
+    "response": "Job",
+    "success": 202
+  },
+  {
+    "operation": "afr_get_replay",
+    "method": "GET",
+    "path": "/api/v1/afr/replays/{replay_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "ReplayResult",
+    "success": 200
+  },
+  {
+    "operation": "skb_create_package",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/skb/packages",
+    "role": "analyst",
+    "if_match": false,
+    "request": "PackageCreate",
+    "response": "Package",
+    "success": 201
+  },
+  {
+    "operation": "skb_get_package",
+    "method": "GET",
+    "path": "/api/v1/skb/packages/{package_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Package",
+    "success": 200
+  },
+  {
+    "operation": "skb_inspect_package",
+    "method": "POST",
+    "path": "/api/v1/skb/packages/{package_id}:inspect",
+    "role": "operator",
+    "if_match": false,
+    "request": "Empty",
+    "response": "Job",
+    "success": 202
+  },
+  {
+    "operation": "skb_review_package",
+    "method": "POST",
+    "path": "/api/v1/skb/packages/{package_id}/reviews",
+    "role": "maintainer",
+    "if_match": true,
+    "request": "PackageReview",
+    "response": "Package",
+    "success": 200
+  },
+  {
+    "operation": "skb_create_suite",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/skb/suites",
+    "role": "maintainer",
+    "if_match": false,
+    "request": "SuiteCreate",
+    "response": "Suite",
+    "success": 201
+  },
+  {
+    "operation": "skb_get_suite",
+    "method": "GET",
+    "path": "/api/v1/skb/suites/{suite_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Suite",
+    "success": 200
+  },
+  {
+    "operation": "skb_create_plan",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/skb/plans",
+    "role": "analyst",
+    "if_match": false,
+    "request": "PlanCreate",
+    "response": "Plan",
+    "success": 201
+  },
+  {
+    "operation": "skb_get_plan",
+    "method": "GET",
+    "path": "/api/v1/skb/plans/{plan_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Plan",
+    "success": 200
+  },
+  {
+    "operation": "skb_preregister",
+    "method": "POST",
+    "path": "/api/v1/skb/plans/{plan_id}:preregister",
+    "role": "maintainer",
+    "if_match": true,
+    "request": "Empty",
+    "response": "Plan",
+    "success": 200
+  },
+  {
+    "operation": "skb_create_experiment",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/skb/experiments",
+    "role": "operator",
+    "if_match": false,
+    "request": "ExperimentCreate",
+    "response": "Experiment",
+    "success": 202
+  },
+  {
+    "operation": "skb_get_experiment",
+    "method": "GET",
+    "path": "/api/v1/skb/experiments/{experiment_id}",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "Experiment",
+    "success": 200
+  },
+  {
+    "operation": "skb_list_trials",
+    "method": "GET",
+    "path": "/api/v1/skb/experiments/{experiment_id}/trials",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "TrialPage",
+    "success": 200
+  },
+  {
+    "operation": "skb_create_analysis",
+    "method": "POST",
+    "path": "/api/v1/skb/experiments/{experiment_id}/analyses",
+    "role": "analyst",
+    "if_match": false,
+    "request": "Empty",
+    "response": "Analysis",
+    "success": 201
+  },
+  {
+    "operation": "skb_get_analysis",
+    "method": "GET",
+    "path": "/api/v1/skb/analyses/{analysis_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Analysis",
+    "success": 200
+  },
+  {
+    "operation": "evf_create_document",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/evf/documents",
+    "role": "analyst",
+    "if_match": false,
+    "request": "DocumentCreate",
+    "response": "Document",
+    "success": 201
+  },
+  {
+    "operation": "evf_list_documents",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/evf/documents",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "DocumentPage",
+    "success": 200
+  },
+  {
+    "operation": "evf_get_document",
+    "method": "GET",
+    "path": "/api/v1/evf/documents/{document_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Document",
+    "success": 200
+  },
+  {
+    "operation": "evf_create_parse",
+    "method": "POST",
+    "path": "/api/v1/evf/documents/{document_id}/parses",
+    "role": "operator",
+    "if_match": false,
+    "request": "ParseCreate",
+    "response": "Parse",
+    "success": 202
+  },
+  {
+    "operation": "evf_get_parse",
+    "method": "GET",
+    "path": "/api/v1/evf/parses/{parse_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Parse",
+    "success": 200
+  },
+  {
+    "operation": "evf_create_extraction",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/evf/extractions",
+    "role": "analyst",
+    "if_match": false,
+    "request": "ExtractionCreate",
+    "response": "Extraction",
+    "success": 201
+  },
+  {
+    "operation": "evf_get_extraction",
+    "method": "GET",
+    "path": "/api/v1/evf/extractions/{extraction_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Extraction",
+    "success": 200
+  },
+  {
+    "operation": "evf_create_review",
+    "method": "POST",
+    "path": "/api/v1/evf/extractions/{extraction_id}/reviews",
+    "role": "analyst",
+    "if_match": true,
+    "request": "ReviewCreate",
+    "response": "Review",
+    "success": 201
+  },
+  {
+    "operation": "evf_list_reviews",
+    "method": "GET",
+    "path": "/api/v1/evf/extractions/{extraction_id}/reviews",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "ReviewPage",
+    "success": 200
+  },
+  {
+    "operation": "evf_create_export",
+    "method": "POST",
+    "path": "/api/v1/evf/extractions/{extraction_id}/exports",
+    "role": "analyst",
+    "if_match": false,
+    "request": "ExportCreate",
+    "response": "Export",
+    "success": 201
+  },
+  {
+    "operation": "evf_get_export",
+    "method": "GET",
+    "path": "/api/v1/evf/exports/{export_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Export",
+    "success": 200
+  },
+  {
+    "operation": "evf_delete_document",
+    "method": "DELETE",
+    "path": "/api/v1/evf/documents/{document_id}",
+    "role": "maintainer",
+    "if_match": false,
+    "request": null,
+    "response": "Deletion",
+    "success": 202
+  },
+  {
+    "operation": "afr_list_cases",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/afr/cases",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "CasePage",
+    "success": 200
+  },
+  {
+    "operation": "skb_list_packages",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/skb/packages",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "PackagePage",
+    "success": 200
+  },
+  {
+    "operation": "skb_list_suites",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/skb/suites",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "SuitePage",
+    "success": 200
+  },
+  {
+    "operation": "skb_list_plans",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/skb/plans",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "PlanPage",
+    "success": 200
+  },
+  {
+    "operation": "skb_list_experiments",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/skb/experiments",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "ExperimentPage",
+    "success": 200
+  }
+]

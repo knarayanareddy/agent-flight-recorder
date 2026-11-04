@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Experiment.json",
+  "title": "Experiment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "plan_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "completed",
+        "stopped",
+        "failed"
+      ]
+    },
+    "job_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "plan_id",
+    "plan_sha256",
+    "state",
+    "job_id",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

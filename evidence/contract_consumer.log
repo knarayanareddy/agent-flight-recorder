@@ -1,0 +1,13 @@
+{
+  "kind": "contract_consumer_rehearsal_only",
+  "operations_consumed": 48,
+  "issues": [],
+  "passed": true,
+  "independent_agent_build": false,
+  "application_executed": false,
+  "remaining_questions": [
+    "Need actual implementation URL and disposable identities to test behavior.",
+    "Need Docker/Postgres/IdP/parser environment for integration evidence.",
+    "Independent implementation agent trial remains NOT RUN."
+  ]
+}

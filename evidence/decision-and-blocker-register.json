@@ -1,0 +1,50 @@
+[
+  {
+    "id": "D01",
+    "status": "accepted_direction",
+    "decision_or_blocker": "Fixture-only first release; preserve full v1 as future gates",
+    "reference": "docs/01_Normative_Baseline.md"
+  },
+  {
+    "id": "D02",
+    "status": "local_spike_passed",
+    "decision_or_blocker": "Atomic event batches, recorded-match fail-closed",
+    "reference": "reference/oracles.py"
+  },
+  {
+    "id": "D03",
+    "status": "local_spike_passed",
+    "decision_or_blocker": "Task-clustered descriptive paired analysis with missingness bounds",
+    "reference": "reference/oracles.py"
+  },
+  {
+    "id": "D04",
+    "status": "local_spike_passed",
+    "decision_or_blocker": "Crop/rotation inverse and Decimal normalization",
+    "reference": "reference/oracles.py"
+  },
+  {
+    "id": "D05",
+    "status": "blocked_validation",
+    "decision_or_blocker": "FastAPI/React/Postgres stack candidates resolved; actual runtime/transitive locks unverified",
+    "reference": "contracts/dependency-candidates.json"
+  },
+  {
+    "id": "D06",
+    "status": "blocked_validation",
+    "decision_or_blocker": "Docling local parser compatibility/assets/containment not executed",
+    "reference": "docs/03_Deployment_and_Operations.md"
+  },
+  {
+    "id": "D07",
+    "status": "blocked_validation",
+    "decision_or_blocker": "Inspect + SkillEvaluator adapter direction; no live engine or whole-harness isolation validation",
+    "reference": "docs/04_Acceptance_and_Implementation_Queue.md"
+  },
+  {
+    "id": "D08",
+    "status": "not_run",
+    "decision_or_blocker": "Independent implementation-agent trial and external release reviews",
+    "reference": "evidence/VALIDATION_REPORT.md"
+  }
+]

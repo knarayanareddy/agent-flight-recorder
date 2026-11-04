@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/SuiteCreate.json",
+  "title": "SuiteCreate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "Task.json"
+      },
+      "minItems": 1,
+      "maxItems": 1000
+    },
+    "rights_manifest_artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "name",
+    "tasks",
+    "rights_manifest_artifact_id"
+  ],
+  "additionalProperties": false
+}

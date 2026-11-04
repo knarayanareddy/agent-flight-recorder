@@ -1,0 +1,6 @@
+{
+  "review_revision": 1,
+  "format": "json",
+  "allow_incomplete": false,
+  "undeclared_field": "must be rejected"
+}

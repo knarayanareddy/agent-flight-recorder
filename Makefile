@@ -32,3 +32,15 @@ gate:
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name .pytest_cache -exec rm -rf {} +
+
+test-baseline:
+	pytest -v tests/test_baseline.py
+
+product-smoke:
+	python scripts/product_smoke.py
+
+product-acceptance:
+	python scripts/product_acceptance.py
+
+product-journeys:
+	python scripts/product_journeys.py

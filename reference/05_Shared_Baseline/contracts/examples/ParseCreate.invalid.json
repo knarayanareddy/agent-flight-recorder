@@ -1,0 +1,5 @@
+{
+  "profile": "fixture/1",
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "undeclared_field": "must be rejected"
+}

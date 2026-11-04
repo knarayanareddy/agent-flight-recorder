@@ -1,0 +1,670 @@
+{
+  "task_ids": [
+    "task-00",
+    "task-01",
+    "task-02",
+    "task-03",
+    "task-04",
+    "task-05",
+    "task-06",
+    "task-07",
+    "task-08",
+    "task-09",
+    "task-10",
+    "task-11"
+  ],
+  "repetitions": 3,
+  "trials": [
+    {
+      "task_id": "task-00",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-00",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-00",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-00",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-00",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-00",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-01",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-02",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-03",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-04",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-05",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-06",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-07",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-08",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-09",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-10",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 0,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 0,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 1,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 1,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 2,
+      "arm": "baseline",
+      "outcome": "fail",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    },
+    {
+      "task_id": "task-11",
+      "repeat": 2,
+      "arm": "treatment",
+      "outcome": "pass",
+      "cost": "0",
+      "currency": "EUR",
+      "attempt": 1
+    }
+  ],
+  "expected_delta": 0.5,
+  "expected_missing": 0,
+  "rights": "Synthetic authored fixture; no personal or third-party data."
+}

@@ -1,0 +1,264 @@
+[
+  {
+    "id": "B00",
+    "title": "Contract baseline",
+    "depends_on": [],
+    "required_paths": "contracts/*, tests/*, docs/*",
+    "acceptance": "Local baseline suite and manifest pass; review limitations; source controls frozen",
+    "status": "in_review",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B00.md"
+  },
+  {
+    "id": "B01",
+    "title": "Runtime/dependency lock",
+    "depends_on": [
+      "B00"
+    ],
+    "required_paths": "apps/api/pyproject.toml + transitive lock, apps/web/package.json + lock, images/Dockerfiles",
+    "acceptance": "Use exact registry candidates as starting versions; resolve compatibility; run Python3.12/Node24 smoke; pin all runtime/transitive versions and images; SBOM/license review",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B01.md"
+  },
+  {
+    "id": "B02",
+    "title": "Database/roles",
+    "depends_on": [
+      "B01"
+    ],
+    "required_paths": "apps/api/db/*, Alembic wrapper, tests/db/*",
+    "acceptance": "Apply both SQL migrations on real Postgres16; role/RLS/FK/immutability/concurrency/pool-reset tests; never runtime owner",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B02.md"
+  },
+  {
+    "id": "B03",
+    "title": "Identity/authorization",
+    "depends_on": [
+      "B02"
+    ],
+    "required_paths": "apps/api/auth/*, permission service, web session routes",
+    "acceptance": "Real OIDC login/logout/expiry/state/PKCE/CSRF, capability matrix, API-key scopes, 401-first endpoint smoke",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B03.md"
+  },
+  {
+    "id": "B04",
+    "title": "Artifacts/deletion",
+    "depends_on": [
+      "B03"
+    ],
+    "required_paths": "apps/api/foundation/uploads.py, artifacts.py, lifecycle.py",
+    "acceptance": "Stream hash/quota/finalize/idempotency; no arbitrary paths; project isolation; active revoke/derived purge/restore tests",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B04.md"
+  },
+  {
+    "id": "B05",
+    "title": "Jobs/outbox",
+    "depends_on": [
+      "B04"
+    ],
+    "required_paths": "apps/dispatcher/*, job repository, broker-disabled policy",
+    "acceptance": "Transactional enqueue/leases/fencing/cancel/retry; crash/ack/store fault tests; fixture dispatcher no external network",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B05.md"
+  },
+  {
+    "id": "B06",
+    "title": "AFR vertical slice",
+    "depends_on": [
+      "B05"
+    ],
+    "required_paths": "apps/api/afr/*, capture client, apps/web/afr/*",
+    "acceptance": "Actual ingest/dedupe/case/replay APIs+DB+UI; authenticated AFR journey positive+negative control; no oracle production import",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B06.md"
+  },
+  {
+    "id": "B07",
+    "title": "SKB vertical slice",
+    "depends_on": [
+      "B05"
+    ],
+    "required_paths": "apps/api/skb/*, analysis service, apps/web/skb/*",
+    "acceptance": "Safe ZIP inspect, approval, immutable plans, fixture pairs, descriptive analysis; actual SKB journey; explicitly simulation",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B07.md"
+  },
+  {
+    "id": "B08",
+    "title": "EVF fixture slice",
+    "depends_on": [
+      "B05"
+    ],
+    "required_paths": "apps/api/evf/*, review/export service, apps/web/evf/*",
+    "acceptance": "Actual fixture source/parse/extract/review/conflict/export/delete journey; eight semantic fields; all source links resolve",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B08.md"
+  },
+  {
+    "id": "B09",
+    "title": "Docling integration",
+    "depends_on": [
+      "B08"
+    ],
+    "required_paths": "isolated parser adapter/images/assets.lock, tests/parser/*",
+    "acceptance": "Real parser on synthetic and licensed ten-document pilot; actual coordinate transforms/model/code terms/resource/no-egress tests; not fixture-only substitution",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B09.md"
+  },
+  {
+    "id": "B10",
+    "title": "Frontend qualification",
+    "depends_on": [
+      "B06",
+      "B07",
+      "B08"
+    ],
+    "required_paths": "component tests, browser journeys, accessibility evidence",
+    "acceptance": "All12 screen/state contracts; real OIDC session; keyboard/text alternatives; manual assistive-tech review and five-user tasks",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B10.md"
+  },
+  {
+    "id": "B11",
+    "title": "Cross-product hardening",
+    "depends_on": [
+      "B06",
+      "B07",
+      "B08",
+      "B09"
+    ],
+    "required_paths": "acceptance/security/*, chaos/load/*",
+    "acceptance": "Full endpoint role/object matrix, secret canaries, duplicate/concurrent/failure tests and capacity report; fixture API smoke alone insufficient",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B11.md"
+  },
+  {
+    "id": "B12",
+    "title": "Data/statistics holdouts",
+    "depends_on": [
+      "B07",
+      "B09"
+    ],
+    "required_paths": "rights manifest, hidden gold, evaluation reports",
+    "acceptance": "Independent domain/statistical review; no tuning final holdout; intervals/missingness/correctness/coverage results published",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B12.md"
+  },
+  {
+    "id": "B13",
+    "title": "Deployment/lifecycle",
+    "depends_on": [
+      "B10",
+      "B11",
+      "B12"
+    ],
+    "required_paths": "built signed images, SBOM, ops evidence",
+    "acceptance": "Install actual product on reference host; encrypted backup/restore/tombstone/upgrade/rollback/load drills",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B13.md"
+  },
+  {
+    "id": "B14",
+    "title": "Clean-room build/review",
+    "depends_on": [
+      "B13"
+    ],
+    "required_paths": "separate session log, resulting commit, question ledger",
+    "acceptance": "A separate agent/person implements/reproduces selected slices from frozen baseline without undocumented help; review assumption gaps; not the authoring subprocess",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B14.md"
+  },
+  {
+    "id": "B15",
+    "title": "Production release",
+    "depends_on": [
+      "B14"
+    ],
+    "required_paths": "evidence/release-status.json, signed release review",
+    "acceptance": "All required gate evidence reviewed; actual operator signoff; no unresolved critical auth/isolation/data-integrity issue",
+    "status": "planned",
+    "definition_of_done": "AGENTS.md + local acceptance + independent evidence review",
+    "verification_commands": [
+      "python -m pytest -q",
+      "python scripts/verify_manifest.py"
+    ],
+    "evidence_path": "evidence/tickets/B15.md"
+  }
+]

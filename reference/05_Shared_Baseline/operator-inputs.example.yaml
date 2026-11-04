@@ -1,0 +1,27 @@
+# Non-secret template only. Copy completed config outside git; use secret references.
+version: operator-inputs/1
+mode: private
+public_host: REQUIRED_operator_domain
+oidc:
+  issuer: REQUIRED_https_issuer
+  client_id: REQUIRED_registered_client
+  client_secret_ref: REQUIRED_secret_store_reference
+  callback: https://REQUIRED_operator_domain/api/v1/auth/callback
+  allowed_subjects: []
+organization_id: REQUIRED_verified_uuid
+storage:
+  encrypted_artifact_volume: REQUIRED_operator_volume
+  backup_destination_ref: REQUIRED_private_destination
+  encryption_key_ref: REQUIRED_operator_key
+  backup_retention_days: 30
+images:
+  api: REQUIRED_repository_at_sha256
+  web: REQUIRED_repository_at_sha256
+contacts:
+  operator: REQUIRED_named_owner
+  security: REQUIRED_private_contact
+  privacy: REQUIRED_responsible_contact
+policy:
+  live_model_calls: false
+  untrusted_code_execution: false
+  external_transfer: false

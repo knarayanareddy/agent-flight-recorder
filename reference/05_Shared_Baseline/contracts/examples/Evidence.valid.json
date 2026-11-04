@@ -1,0 +1,16 @@
+{
+  "document_id": "00000000-0000-4000-8000-000000000001",
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "parse_id": "00000000-0000-4000-8000-000000000001",
+  "element_id": "x",
+  "region": {
+    "page_ordinal": 1,
+    "x0": 0,
+    "y0": 0,
+    "x1": 0,
+    "y1": 0
+  },
+  "quote": "x",
+  "method": "digital_text",
+  "support": "supported_exact"
+}

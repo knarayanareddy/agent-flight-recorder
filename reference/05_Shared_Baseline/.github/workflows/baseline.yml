@@ -1,0 +1,19 @@
+name: Baseline contracts and deterministic oracles
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Require configured Python 3.12 runner
+        run: python3.12 --version
+      - name: Install baseline-only tooling
+        run: python3.12 -m pip install -r requirements-baseline.txt
+      - name: Verify contracts and independent oracles
+        run: python3.12 -m pytest -q
+      - name: Validate artifact manifest
+        run: python3.12 scripts/verify_manifest.py
+# No deploy or protected secrets. Workflow runner Python availability is a preflight requirement.
+# Adopt a reviewed/pinned setup-python action if your runner does not supply Python 3.12.

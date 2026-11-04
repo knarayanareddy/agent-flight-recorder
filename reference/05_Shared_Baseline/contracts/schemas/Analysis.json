@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Analysis.json",
+  "title": "Analysis",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "experiment_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "analysis_version": {
+      "const": "paired-task-bootstrap/1"
+    },
+    "input_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "partial",
+        "insufficient"
+      ]
+    },
+    "n_tasks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "n_complete_tasks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "delta": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": -1,
+      "maximum": 1
+    },
+    "ci_low": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": -1,
+      "maximum": 1
+    },
+    "ci_high": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": -1,
+      "maximum": 1
+    },
+    "bound_low": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": -1,
+      "maximum": 1
+    },
+    "bound_high": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": -1,
+      "maximum": 1
+    },
+    "interpretation": {
+      "const": "descriptive_no_certification"
+    },
+    "missing_trials": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "id",
+    "experiment_id",
+    "analysis_version",
+    "input_sha256",
+    "status",
+    "n_tasks",
+    "n_complete_tasks",
+    "delta",
+    "ci_low",
+    "ci_high",
+    "bound_low",
+    "bound_high",
+    "interpretation",
+    "missing_trials"
+  ],
+  "additionalProperties": false
+}

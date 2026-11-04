@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Check.json",
+  "title": "Check",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "json_equals",
+        "forbidden_tool",
+        "mock_state_equals"
+      ]
+    },
+    "path": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "expected": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "path",
+    "expected"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/ExtractionCreate.json",
+  "title": "ExtractionCreate",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "annual-report-8/1"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "fixture",
+        "deterministic"
+      ]
+    },
+    "parse_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "schema_version",
+    "method",
+    "parse_id"
+  ],
+  "additionalProperties": false
+}

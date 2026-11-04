@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Run.json",
+  "title": "Run",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "recording",
+        "completed",
+        "failed",
+        "abandoned"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "event_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "completeness": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sequence_gap",
+          "missing_terminal",
+          "orphan",
+          "content_not_captured",
+          "truncated"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "verified_outcome": {
+      "type": "string",
+      "enum": [
+        "unscored",
+        "pass",
+        "fail",
+        "error"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "state",
+    "revision",
+    "event_count",
+    "completeness",
+    "verified_outcome",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

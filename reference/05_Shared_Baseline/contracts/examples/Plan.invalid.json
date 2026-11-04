@@ -1,0 +1,24 @@
+{
+  "id": "00000000-0000-4000-8000-000000000001",
+  "project_id": "00000000-0000-4000-8000-000000000001",
+  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "state": "draft",
+  "revision": 1,
+  "definition": {
+    "package_id": "00000000-0000-4000-8000-000000000001",
+    "package_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "suite_id": "00000000-0000-4000-8000-000000000001",
+    "suite_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "harness": "fixture/1",
+    "model": "recorded/1",
+    "repetitions": 1,
+    "seed": 0,
+    "bootstrap_iterations": 100,
+    "practical_margin": 0,
+    "primary_metric": "task_mean_success_delta",
+    "missing_rule": "report_bounds_no_silent_drop",
+    "mode": "fixture_only"
+  },
+  "created_at": "2026-11-03T12:00:00Z",
+  "undeclared_field": "must be rejected"
+}

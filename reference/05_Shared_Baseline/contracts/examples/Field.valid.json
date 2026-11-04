@@ -1,0 +1,12 @@
+{
+  "key": "entity",
+  "raw": "x",
+  "value": "x",
+  "currency": "EUR",
+  "scale": "1",
+  "period_end": "2026-10-31",
+  "missing_reason": "not_present",
+  "evidence": [],
+  "review_state": "unreviewed",
+  "risk_flags": []
+}

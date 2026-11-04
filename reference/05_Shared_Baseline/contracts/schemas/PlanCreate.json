@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/PlanCreate.json",
+  "title": "PlanCreate",
+  "type": "object",
+  "properties": {
+    "package_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "package_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "suite_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "suite_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "harness": {
+      "const": "fixture/1"
+    },
+    "model": {
+      "const": "recorded/1"
+    },
+    "repetitions": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "bootstrap_iterations": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 10000
+    },
+    "practical_margin": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "primary_metric": {
+      "const": "task_mean_success_delta"
+    },
+    "missing_rule": {
+      "const": "report_bounds_no_silent_drop"
+    },
+    "mode": {
+      "const": "fixture_only"
+    }
+  },
+  "required": [
+    "package_id",
+    "package_sha256",
+    "suite_id",
+    "suite_sha256",
+    "harness",
+    "model",
+    "repetitions",
+    "seed",
+    "bootstrap_iterations",
+    "practical_margin",
+    "primary_metric",
+    "missing_rule",
+    "mode"
+  ],
+  "additionalProperties": false
+}

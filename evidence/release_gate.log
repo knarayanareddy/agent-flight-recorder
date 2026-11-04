@@ -1,0 +1,21 @@
+{
+  "ready": false,
+  "blocking": [
+    "postgres_migrations",
+    "application_e2e",
+    "authorization_matrix",
+    "oidc_integration",
+    "docling_integration",
+    "executor_boundary",
+    "backup_restore",
+    "load_chaos",
+    "accessibility_manual",
+    "domain_holdout",
+    "statistical_review",
+    "independent_security_review",
+    "clean_room_agent_trial",
+    "release_images_sbom",
+    "operator_signoff"
+  ],
+  "warning": "Evidence claims require independent review; this script cannot verify human truthfulness."
+}

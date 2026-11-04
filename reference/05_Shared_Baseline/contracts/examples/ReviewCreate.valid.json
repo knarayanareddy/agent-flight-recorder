@@ -1,0 +1,10 @@
+{
+  "base_revision": 1,
+  "patches": [
+    {
+      "key": "x",
+      "action": "accept",
+      "reason": "xxxxx"
+    }
+  ]
+}

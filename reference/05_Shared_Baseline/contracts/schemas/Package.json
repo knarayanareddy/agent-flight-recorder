@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Package.json",
+  "title": "Package",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "quarantined",
+        "inspected",
+        "approved",
+        "rejected"
+      ]
+    },
+    "execution_profile": {
+      "const": "fixture_only"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "artifact_id",
+    "sha256",
+    "state",
+    "execution_profile",
+    "revision"
+  ],
+  "additionalProperties": false
+}

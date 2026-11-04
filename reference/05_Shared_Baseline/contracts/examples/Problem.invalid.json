@@ -1,0 +1,9 @@
+{
+  "type": "https://baseline.invalid/problems/invalid",
+  "title": "x",
+  "status": 400,
+  "code": "invalid",
+  "detail": "x",
+  "request_id": "00000000-0000-4000-8000-000000000001",
+  "undeclared_field": "must be rejected"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "00000000-0000-4000-8000-000000000001",
+  "project_id": "00000000-0000-4000-8000-000000000001",
+  "version": 1,
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_artifact_id": "00000000-0000-4000-8000-000000000001",
+  "title": "x",
+  "state": "quarantined",
+  "page_count": 1,
+  "created_at": "2026-11-03T12:00:00Z",
+  "undeclared_field": "must be rejected"
+}

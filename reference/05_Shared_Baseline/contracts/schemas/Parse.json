@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Parse.json",
+  "title": "Parse",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "document_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "fixture/1",
+        "docling_local/1"
+      ]
+    },
+    "profile_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "parsed",
+        "partial",
+        "failed"
+      ]
+    },
+    "job_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "page_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "document_id",
+    "source_sha256",
+    "profile",
+    "profile_sha256",
+    "state",
+    "job_id",
+    "page_count",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

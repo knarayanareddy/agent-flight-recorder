@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Task.json",
+  "title": "Task",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "category": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "input_artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "split": {
+      "type": "string",
+      "enum": [
+        "development",
+        "validation",
+        "holdout"
+      ]
+    },
+    "scorer_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    }
+  },
+  "required": [
+    "id",
+    "category",
+    "input_artifact_id",
+    "split",
+    "scorer_id"
+  ],
+  "additionalProperties": false
+}

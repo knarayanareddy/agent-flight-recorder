@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/EventPayload.json",
+  "title": "EventPayload",
+  "type": "object",
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "unknown"
+      ]
+    },
+    "input_tokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "output_tokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "content_artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "redacted": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "missing_sequence_start": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missing_sequence_end": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

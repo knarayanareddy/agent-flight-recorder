@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Field.json",
+  "title": "Field",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "enum": [
+        "entity",
+        "period_end",
+        "currency",
+        "scale",
+        "revenue_current",
+        "revenue_prior",
+        "assets_current",
+        "assets_prior"
+      ]
+    },
+    "raw": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "value": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$"
+    },
+    "scale": {
+      "enum": [
+        "1",
+        "1000",
+        "1000000",
+        null
+      ]
+    },
+    "period_end": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "missing_reason": {
+      "enum": [
+        "not_present",
+        "unreadable",
+        "ambiguous",
+        "unsupported",
+        "parse_failed",
+        null
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "Evidence.json"
+      },
+      "maxItems": 20
+    },
+    "review_state": {
+      "type": "string",
+      "enum": [
+        "unreviewed",
+        "accepted",
+        "corrected",
+        "rejected",
+        "needs_review"
+      ]
+    },
+    "risk_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "unit_ambiguous",
+          "period_ambiguous",
+          "support_mismatch",
+          "arithmetic_discrepancy",
+          "wrong_row",
+          "parse_warning"
+        ]
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "key",
+    "raw",
+    "value",
+    "currency",
+    "scale",
+    "period_end",
+    "missing_reason",
+    "evidence",
+    "review_state",
+    "risk_flags"
+  ],
+  "additionalProperties": false
+}

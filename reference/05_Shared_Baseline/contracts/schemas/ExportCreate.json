@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/ExportCreate.json",
+  "title": "ExportCreate",
+  "type": "object",
+  "properties": {
+    "review_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "json",
+        "csv"
+      ]
+    },
+    "allow_incomplete": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "review_revision",
+    "format",
+    "allow_incomplete"
+  ],
+  "additionalProperties": false
+}

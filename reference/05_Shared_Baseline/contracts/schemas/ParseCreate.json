@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/ParseCreate.json",
+  "title": "ParseCreate",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "type": "string",
+      "enum": [
+        "fixture/1",
+        "docling_local/1"
+      ]
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "profile",
+    "source_sha256"
+  ],
+  "additionalProperties": false
+}

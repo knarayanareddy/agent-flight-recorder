@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Deletion.json",
+  "title": "Deletion",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "requested",
+        "revoked",
+        "purging",
+        "complete",
+        "failed"
+      ]
+    },
+    "revoked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purge_deadline": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "affected_artifacts": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "id",
+    "state",
+    "revoked_at",
+    "purge_deadline",
+    "affected_artifacts"
+  ],
+  "additionalProperties": false
+}

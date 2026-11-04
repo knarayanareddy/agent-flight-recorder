@@ -1,0 +1,133 @@
+name: baseline
+services:
+  db:
+    image: postgres@sha256:5db6dac2ef5dcff512f4f00a009c3c332b9f2f28f24277175bf3e4a3d02ef83a
+    environment:
+      POSTGRES_DB: baseline
+      POSTGRES_USER: migration_owner
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_owner_password
+    secrets:
+    - db_owner_password
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    networks:
+    - data
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U migration_owner -d baseline
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    mem_limit: 2g
+  api:
+    profiles:
+    - product
+    image: ${API_IMAGE:-baseline-api:UNBUILT}
+    user: 10001:10001
+    read_only: true
+    cap_drop:
+    - ALL
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /tmp:size=64m,noexec,nosuid
+    environment:
+      BASELINE_MODE: private
+      DATABASE_DSN_FILE: /run/secrets/app_db_dsn
+      OIDC_ISSUER: ${OIDC_ISSUER:-UNCONFIGURED}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-UNCONFIGURED}
+      ARTIFACT_ROOT: /artifacts
+      BASELINE_LIVE_ENABLED: 'false'
+    secrets:
+    - app_db_dsn
+    volumes:
+    - artifacts:/artifacts
+    networks:
+    - edge
+    - data
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 1g
+    pids_limit: 128
+    restart: unless-stopped
+  web:
+    profiles:
+    - product
+    image: ${WEB_IMAGE:-baseline-web:UNBUILT}
+    user: 10001:10001
+    read_only: true
+    cap_drop:
+    - ALL
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /tmp:size=32m,noexec,nosuid
+    networks:
+    - edge
+    mem_limit: 512m
+    pids_limit: 64
+  edge:
+    profiles:
+    - product
+    image: caddy@sha256:36c24ad91a7ff7bc4c87fe22bfa8df3c4b18da0773d73fc12ee2c52b98c0bb7e
+    ports:
+    - 443:443
+    - 80:80
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:-UNCONFIGURED}
+    volumes:
+    - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    - caddy_data:/data
+    - caddy_config:/config
+    networks:
+    - edge
+    depends_on:
+    - api
+    - web
+    restart: unless-stopped
+  dispatcher:
+    profiles:
+    - product
+    image: ${API_IMAGE:-baseline-api:UNBUILT}
+    command:
+    - python
+    - -m
+    - apps.dispatcher
+    user: 10001:10001
+    read_only: true
+    cap_drop:
+    - ALL
+    security_opt:
+    - no-new-privileges:true
+    tmpfs:
+    - /tmp:size=128m,noexec,nosuid
+    environment:
+      DATABASE_DSN_FILE: /run/secrets/dispatcher_db_dsn
+      BASELINE_LIVE_ENABLED: 'false'
+    secrets:
+    - dispatcher_db_dsn
+    volumes:
+    - artifacts:/artifacts
+    networks:
+    - data
+    mem_limit: 1g
+    pids_limit: 128
+networks:
+  edge: {}
+  data:
+    internal: true
+volumes:
+  db_data: {}
+  artifacts: {}
+  caddy_data: {}
+  caddy_config: {}
+secrets:
+  db_owner_password:
+    file: ./secrets/db_owner_password
+  app_db_dsn:
+    file: ./secrets/app_db_dsn
+  dispatcher_db_dsn:
+    file: ./secrets/dispatcher_db_dsn

@@ -1,0 +1,106 @@
+{
+  "id": "00000000-0000-4000-8000-000000000001",
+  "project_id": "00000000-0000-4000-8000-000000000001",
+  "parse_id": "00000000-0000-4000-8000-000000000001",
+  "schema_version": "annual-report-8/1",
+  "revision": 1,
+  "fields": [
+    {
+      "key": "entity",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "period_end",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "currency",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "scale",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "revenue_current",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "revenue_prior",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "assets_current",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    },
+    {
+      "key": "assets_prior",
+      "raw": null,
+      "value": null,
+      "currency": null,
+      "scale": null,
+      "period_end": null,
+      "missing_reason": "unsupported",
+      "evidence": [],
+      "review_state": "needs_review",
+      "risk_flags": []
+    }
+  ],
+  "created_at": "2026-11-03T12:00:00Z"
+}

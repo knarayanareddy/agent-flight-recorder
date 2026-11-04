@@ -1,0 +1,6 @@
+pytest==9.0.3
+jsonschema==4.26.0
+referencing==0.37.0
+PyYAML==6.0.3
+httpx==0.28.1
+pglast==7.22

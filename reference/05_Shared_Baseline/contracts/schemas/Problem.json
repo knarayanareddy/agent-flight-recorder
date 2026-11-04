@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Problem.json",
+  "title": "Problem",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "format": "uri"
+    },
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer",
+      "minimum": 400,
+      "maximum": 599
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "invalid",
+        "unauthenticated",
+        "forbidden",
+        "not_found",
+        "conflict",
+        "precondition_failed",
+        "too_large",
+        "unsupported_media",
+        "quota",
+        "unavailable",
+        "mode_disabled"
+      ]
+    },
+    "detail": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "field_errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "code"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "type",
+    "title",
+    "status",
+    "code",
+    "detail",
+    "request_id"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,5 @@
+{
+  "kind": "json_equals",
+  "path": "x",
+  "expected": "x"
+}

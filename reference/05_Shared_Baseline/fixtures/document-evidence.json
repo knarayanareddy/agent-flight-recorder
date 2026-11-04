@@ -1,0 +1,41 @@
+{
+  "source": {
+    "document_id": "00000000-0000-4000-8000-000000000001",
+    "sha256": "ec14a14dcd0afc635c34446c6b4e4374dcb8f24866872c4523baf078e6c40a4a",
+    "page_count": 1
+  },
+  "parse": {
+    "id": "00000000-0000-4000-8000-000000000001",
+    "elements": {
+      "e1": {
+        "page_ordinal": 1,
+        "region": {
+          "page_ordinal": 1,
+          "x0": 0.1,
+          "y0": 0.1,
+          "x1": 0.9,
+          "y1": 0.2
+        },
+        "text": "Synthetic annual report FY 2025 | Entity: Example Labs | Revenue: 1,234 | Assets: 5,678 | Currency EUR; units 1000"
+      }
+    }
+  },
+  "evidence": {
+    "document_id": "00000000-0000-4000-8000-000000000001",
+    "source_sha256": "ec14a14dcd0afc635c34446c6b4e4374dcb8f24866872c4523baf078e6c40a4a",
+    "parse_id": "00000000-0000-4000-8000-000000000001",
+    "element_id": "e1",
+    "region": {
+      "page_ordinal": 1,
+      "x0": 0.1,
+      "y0": 0.1,
+      "x1": 0.9,
+      "y1": 0.2
+    },
+    "quote": "Revenue: 1,234",
+    "method": "digital_text",
+    "support": "supported_exact"
+  },
+  "rights": "Synthetic document authored for this baseline. No real issuer or personal data.",
+  "note": "Regions are synthetic acceptance-fixture metadata, NOT actual Docling extraction output."
+}

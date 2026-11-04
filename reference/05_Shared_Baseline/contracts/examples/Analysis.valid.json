@@ -1,0 +1,16 @@
+{
+  "id": "00000000-0000-4000-8000-000000000001",
+  "experiment_id": "00000000-0000-4000-8000-000000000001",
+  "analysis_version": "paired-task-bootstrap/1",
+  "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "valid",
+  "n_tasks": 0,
+  "n_complete_tasks": 0,
+  "delta": -1,
+  "ci_low": -1,
+  "ci_high": -1,
+  "bound_low": -1,
+  "bound_high": -1,
+  "interpretation": "descriptive_no_certification",
+  "missing_trials": 0
+}

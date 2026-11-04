@@ -1,0 +1,10 @@
+{
+  "task_id": "x",
+  "repeat": 0,
+  "arm": "baseline",
+  "outcome": "pass",
+  "cost": "0",
+  "currency": "EUR",
+  "attempt": 1,
+  "undeclared_field": "must be rejected"
+}

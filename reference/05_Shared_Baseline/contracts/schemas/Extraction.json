@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Extraction.json",
+  "title": "Extraction",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "parse_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "schema_version": {
+      "const": "annual-report-8/1"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "Field.json"
+      },
+      "minItems": 8,
+      "maxItems": 8
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "parse_id",
+    "schema_version",
+    "revision",
+    "fields",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

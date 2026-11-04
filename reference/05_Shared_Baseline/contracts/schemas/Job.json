@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Job.json",
+  "title": "Job",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "leased",
+        "running",
+        "cancel_requested",
+        "succeeded",
+        "failed",
+        "timed_out",
+        "cancelled",
+        "failed_unknown_effect"
+      ]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "kind",
+    "state",
+    "attempt",
+    "revision",
+    "created_at",
+    "result_id",
+    "error_code"
+  ],
+  "additionalProperties": false
+}

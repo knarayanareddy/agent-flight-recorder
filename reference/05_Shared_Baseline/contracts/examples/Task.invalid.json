@@ -1,0 +1,8 @@
+{
+  "id": "x",
+  "category": "x",
+  "input_artifact_id": "00000000-0000-4000-8000-000000000001",
+  "split": "development",
+  "scorer_id": "x",
+  "undeclared_field": "must be rejected"
+}

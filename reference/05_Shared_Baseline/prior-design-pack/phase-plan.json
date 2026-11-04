@@ -1,0 +1,1300 @@
+{
+  "FND": [
+    [
+      "F0",
+      "Agree scope, boundaries and evidence plan",
+      "Product + tech lead",
+      "Signed baseline and risk owners; no coding before the trust/deployment boundary is agreed.",
+      [
+        [
+          "Approve deployment contract",
+          "Choose developer/private-server/demo modes and document disabled capabilities.",
+          "All three products have a named persona, supported mode, non-goals and no hidden public-execution promise.",
+          "scope-and-mode-ADR.md",
+          "scope review"
+        ],
+        [
+          "Map data and trust boundaries",
+          "Draw dataflows including workers, model calls, artifacts and human approvals.",
+          "Each boundary has actor, data classification, enforcement location and responsible reviewer.",
+          "dataflow-threat-model.md",
+          "threat-model review"
+        ],
+        [
+          "Select support matrix",
+          "Resolve runtime, OS/CPU, storage, identity and hardened-executor candidate versions.",
+          "Every required component has a pinned tested candidate and unresolved assumptions are gated.",
+          "support-matrix.yaml",
+          "dependency preflight design"
+        ],
+        [
+          "Set measurable release targets",
+          "Freeze SLO load profile, quality targets, release blockers and benchmark ownership.",
+          "Targets have denominators, hardware, method and explicit proposed status.",
+          "release-targets.yaml",
+          "test-plan review"
+        ],
+        [
+          "Establish delivery governance",
+          "Assign product, frontend, backend, security, UX, QA and statistical reviewers; create ADR/risk/change templates.",
+          "Every gate has an approver; single-person teams have an explicit external review plan.",
+          "ownership-and-risks.md",
+          "responsibility review"
+        ]
+      ]
+    ],
+    [
+      "F1",
+      "Repository, contracts and reproducible development",
+      "Platform engineer",
+      "Clean checkout builds, typed contracts roundtrip, and contract CI blocks incompatible changes.",
+      [
+        [
+          "Scaffold independent product profiles",
+          "Create modular apps/packages, Compose profiles, fixture data, lint/typecheck and documented commands.",
+          "Each product boots alone from clean checkout without real provider keys.",
+          "repository-layout-and-quickstart.md",
+          "clean-install smoke"
+        ],
+        [
+          "Implement versioned schema package",
+          "Define event, artifact, job, error and result envelopes; generate OpenAPI/TS clients.",
+          "Positive/negative samples validate; incompatible changes fail compatibility checks.",
+          "schemas-and-client-build",
+          "contract roundtrip"
+        ],
+        [
+          "Add CI and dependency controls",
+          "Lock dependencies/images; add tests, secret scanning, SBOM, license checks and fork-safe CI.",
+          "Untrusted fork cannot access publish/provider secrets; intentionally leaked test secret is detected.",
+          "ci-policy-and-sbom",
+          "CI security fixtures"
+        ],
+        [
+          "Build migration infrastructure",
+          "Add module-owned tables, constraints, seed/migration helpers and expand-contract policy.",
+          "Fresh DB and prior-release upgrade both pass; partial migration failure is recoverable.",
+          "migration-harness",
+          "database upgrade tests"
+        ],
+        [
+          "Implement safe error/observability base",
+          "Add problem responses, request IDs, metadata-only logs, metrics and health/readiness endpoints.",
+          "Canary content/credentials absent from logs/errors/metrics; readiness reflects required dependencies.",
+          "observability-fixtures",
+          "redaction and outage tests"
+        ]
+      ]
+    ],
+    [
+      "F2",
+      "Identity, artifacts and lifecycle",
+      "Backend + security",
+      "No object-level bypass; artifact integrity and deletion behavior are verified.",
+      [
+        [
+          "Implement OIDC and local bootstrap",
+          "Validate issuer/audience/state/nonce; secure sessions; reject unsafe unauthenticated exposure.",
+          "Expiry/revocation/CSRF/host-origin tests pass; local-only mode refuses remote deployment.",
+          "auth-threat-tests",
+          "FND-T01"
+        ],
+        [
+          "Enforce roles/project scope",
+          "Implement central authorization and separate metadata/content/run/admin capabilities.",
+          "All resource/list/export/SSE paths deny cross-project and wrong-role access.",
+          "permission-matrix.csv",
+          "FND-T02"
+        ],
+        [
+          "Implement artifact upload/finalize",
+          "Generate keys, enforce quotas, digest/media checks, authorization and bounded downloads.",
+          "Duplicate finalize is idempotent; hash mismatch/quarantined file never becomes readable.",
+          "artifact-contract-report",
+          "FND-T03"
+        ],
+        [
+          "Implement secret/provider profile handling",
+          "Store write-only secret references, configured provider destinations and explicit transfer policy.",
+          "Secrets never returned by APIs; arbitrary endpoint/redirect/private-IP access denied.",
+          "provider-policy-tests",
+          "FND-T04"
+        ],
+        [
+          "Implement lineage/retention/deletion",
+          "Track derivatives, tombstones, revocation, purge, orphan GC and restore replay.",
+          "Delete/retry/restore exercise reaches all seeded derivatives and blocks reads immediately.",
+          "deletion-drill.md",
+          "FND-T05"
+        ]
+      ]
+    ],
+    [
+      "F3",
+      "Jobs, budgets and executor isolation",
+      "Platform + security",
+      "Fault-tolerant scheduling and the actual hardened-executor boundary pass; unsupported live modes remain disabled.",
+      [
+        [
+          "Implement job/outbox leasing",
+          "Create transactional outbox, leases, attempts, fencing and bounded idempotency.",
+          "Crash before/after commit, lost ack and stale completion cannot duplicate logical results.",
+          "job-state-tests",
+          "FND-T06"
+        ],
+        [
+          "Implement limits and cancellation",
+          "Enforce fair concurrency, memory/time/output quotas, capability revocation and retry policy.",
+          "Runaway/timeout/cancel/unknown-effect states are visible and reconciled; no blind write retries.",
+          "limit-and-cancel-report",
+          "FND-T07"
+        ],
+        [
+          "Implement budget broker",
+          "Reserve tokens/calls/estimated spend atomically; record actual/unknown cost and provider rate failures.",
+          "Concurrent jobs cannot bypass configured reservation; in-flight overshoot bound is documented.",
+          "budget-race-tests",
+          "FND-T08"
+        ],
+        [
+          "Validate hardened executor",
+          "Implement dedicated-host gVisor/microVM adapter, no DB/host/socket access and scoped artifact collector.",
+          "Entire untrusted harness/plugins isolated; egress/private network/host-mount probes denied.",
+          "executor-security-evidence.md",
+          "FND-T09"
+        ],
+        [
+          "Implement recovery/reconciliation",
+          "Detect orphan work/artifacts, classify retry-safe jobs, reconcile unknown effects and drain workers.",
+          "Worker death and service outage recover without lost accepted work or fabricated terminal success.",
+          "recovery-drill.md",
+          "FND-T10"
+        ]
+      ]
+    ],
+    [
+      "F4",
+      "Shared UX and verification framework",
+      "Frontend + QA",
+      "Accessible primary flows and reliable test infrastructure support all products.",
+      [
+        [
+          "Build design system",
+          "Implement tokens, navigation, forms, tables, status/errors, safe content view and responsive layout.",
+          "All declared states have components; keyboard/contrast/focus checks pass.",
+          "storybook-and-accessibility-log",
+          "FND-T11"
+        ],
+        [
+          "Implement job/status UI",
+          "Add authenticated SSE reconnection, persisted status, budget preflight and cancel confirmation.",
+          "Disconnect/reconnect/expired session/stale cursor never lose authoritative job state.",
+          "status-flow-tests",
+          "FND-T12"
+        ],
+        [
+          "Implement verification primitives",
+          "Create trusted built-in verifiers, immutable result schema and evidence references.",
+          "Error/unknown/unscored differ from task failure/pass; malicious inputs cannot execute host code.",
+          "verifier-contract-tests",
+          "FND-T13"
+        ],
+        [
+          "Build security/fault fixture harness",
+          "Add cross-project, XSS, archive, SSRF, injection, crash and canary-secret fixtures.",
+          "Each shared threat has an executable negative test or explicit manual deployment gate.",
+          "security-fixture-catalog",
+          "FND-T14"
+        ],
+        [
+          "Run shared usability/accessibility pilot",
+          "Test real primary workflows at keyboard/zoom/screen-reader plus five representative users.",
+          "Observed blockers are fixed; task completion evidence recorded; no unearned conformance claim.",
+          "ux-accessibility-evidence.md",
+          "FND-T15"
+        ]
+      ]
+    ],
+    [
+      "F5",
+      "Deployment and release foundation",
+      "Operations + QA",
+      "Reference install, backup/restore, rollback and incident handling are rehearsed.",
+      [
+        [
+          "Harden deployment templates",
+          "Configure TLS, private networks, no default credentials, resource limits and preflight checks.",
+          "Only edge port exposed; unsupported runtime and insecure config fail startup/preflight.",
+          "deployment-preflight-report",
+          "FND-T16"
+        ],
+        [
+          "Rehearse backups and recovery",
+          "Back up DB/artifacts/secrets references; restore clean environment and apply tombstones before traffic.",
+          "Measured reference RPO/RTO meet targets; encrypted backup retention documented.",
+          "restore-evidence.md",
+          "FND-T17"
+        ],
+        [
+          "Load and chaos test foundation",
+          "Exercise declared user/event/job load and dependency outages.",
+          "Latency/error targets measured; bottlenecks and capacity envelope published.",
+          "load-chaos-report",
+          "FND-T18"
+        ],
+        [
+          "Write/rehearse incident and rollback runbooks",
+          "Walk through leak, compromised worker, runaway cost, migration failure and old/new workers.",
+          "Named operator completes drills without undocumented permissions or unsafe data restoration.",
+          "operations-runbooks",
+          "FND-T19"
+        ],
+        [
+          "Approve release checklist",
+          "Collect SBOM, licenses, signed digests, migrations, limitations and reviewer signoff.",
+          "No unresolved release blocker; every exception has owner, expiry and scope.",
+          "foundation-release-evidence",
+          "FND-T20"
+        ]
+      ]
+    ]
+  ],
+  "AFR": [
+    [
+      "A0",
+      "Validate differentiation and prototype failure-to-test",
+      "Product + tech lead",
+      "User need and replay terminology validated; build/integrate decision signed.",
+      [
+        [
+          "Interview target developers",
+          "Collect five concrete failure stories and existing debugger workflows; compare Phoenix/Langfuse.",
+          "At least three interviewees identify a recurring unmet trace-to-test need or project is repositioned.",
+          "afr-discovery.md",
+          "AFR-R06 / interview evidence"
+        ],
+        [
+          "Inspect comparable workflows",
+          "Build a minimal capture/replay/fixture comparison against pinned upstream versions.",
+          "Feature claims distinguish documented, tested and unknown; reuse boundaries recorded.",
+          "afr-comparison-ADR.md",
+          "comparison spike"
+        ],
+        [
+          "Define tasks and replay guarantees",
+          "Select mock domain, 50-task suite plan, seeded failures and four replay mode definitions.",
+          "No production-write or deterministic-hosted-model claim remains in acceptance criteria.",
+          "afr-suite-and-replay-policy",
+          "AFR-T04/05 design"
+        ],
+        [
+          "Prototype primary journey",
+          "Clickable list/timeline/eligibility/case wizard/compare flow with missing evidence states.",
+          "Five users attempt failure-to-test flow; blockers and <=10-minute target baseline recorded.",
+          "afr-prototype-review",
+          "AFR-T08 prototype"
+        ],
+        [
+          "Freeze requirements and threat model",
+          "Map R01\u2013R10, event content policy, adapter scope, state transitions and owners.",
+          "All requirements have implementation phase/test; initial source/model data rights checked.",
+          "afr-baseline-signoff",
+          "requirements review"
+        ]
+      ]
+    ],
+    [
+      "A1",
+      "Capture contracts and safe SDK skeleton",
+      "SDK engineer",
+      "Metadata-only SDK and versioned fixtures work without provider credentials.",
+      [
+        [
+          "Define event/run contracts",
+          "Implement envelope, operation links, timestamps, completeness flags and bounded extensions.",
+          "Invalid IDs/types/sequence conflicts rejected; additive schema roundtrip succeeds.",
+          "afr-event-contracts",
+          "AFR-T02/03"
+        ],
+        [
+          "Implement capture policy/redaction",
+          "Allowlist metadata; opt-in content; recursive bounded redaction; forbid generic object serialization.",
+          "Canary credentials absent from buffer, errors, metadata, disk and export paths.",
+          "afr-capture-policy-tests",
+          "AFR-T01"
+        ],
+        [
+          "Build bounded Python/TS clients",
+          "Implement async batching, queue bytes limit, drop signals, context propagation and flush timeout.",
+          "Offline exporter cannot grow memory unbounded or block application indefinitely.",
+          "afr-sdk-tests",
+          "AFR-T01/02"
+        ],
+        [
+          "Implement synthetic capture demo",
+          "Provide keyless mock agent with model/tool/error/approval/checkpoint events.",
+          "Fresh user produces and inspects fixture run with no network/provider dependency.",
+          "afr-demo-fixture",
+          "AFR-T06 smoke"
+        ],
+        [
+          "Document adapter contract",
+          "Specify one provider and one framework adapter including streaming/cancellation/missing fields.",
+          "Supported fields and omissions explicit; compatibility fixtures committed before integration.",
+          "afr-adapter-spec",
+          "adapter contract review"
+        ]
+      ]
+    ],
+    [
+      "A2",
+      "Durable ingestion and materialized runs",
+      "Backend engineer",
+      "Duplicate/reordered events, partial capture and late arrivals are accurately represented.",
+      [
+        [
+          "Implement ingest authentication and receipts",
+          "Create batch endpoint, scoped keys, size/rate limits, per-event responses and transactional persistence.",
+          "Retries preserve event IDs; unauthorized project/key cannot ingest or read content.",
+          "afr-ingestion-tests",
+          "AFR-T01/02"
+        ],
+        [
+          "Implement event conflict/deduplication",
+          "Enforce event/producer-sequence constraints and contradictory-payload handling.",
+          "Duplicate identical batches do not duplicate; changed duplicate rejected without overwrite.",
+          "afr-dedup-report",
+          "AFR-T02"
+        ],
+        [
+          "Build materializer/completeness tracking",
+          "Derive operations/run state, sequence gaps, orphan spans and explicit truncation warnings.",
+          "Oracle-seeded omissions flagged; succeeded agent can retain failed/unknown verification.",
+          "afr-completeness-report",
+          "AFR-T03"
+        ],
+        [
+          "Add query/pagination/SSE",
+          "Implement indexed lists, event pages, safe filters, content rights and reconnect cursors.",
+          "100k-event project lists meet target; stream auth/reconnect and filter isolation pass.",
+          "afr-query-load-test",
+          "AFR-T08"
+        ],
+        [
+          "Integrate provider/framework adapters",
+          "Test pinned versions, stream responses, async tools, errors and optional capture.",
+          "Both adapters disclose unsupported fields and pass compatibility/canary cases.",
+          "afr-integration-matrix",
+          "AFR-T01/02/03"
+        ]
+      ]
+    ],
+    [
+      "A3",
+      "Investigation UI and evidence handling",
+      "Frontend + UX",
+      "Users can find the failure and understand incomplete capture accessibly.",
+      [
+        [
+          "Build runs inventory",
+          "Implement states, completeness, verification, cost uncertainty, filters and safe empty state.",
+          "Recording/abandoned/partial/filter-empty/deleted/denied states are distinct and tested.",
+          "afr-runs-e2e",
+          "AFR-T08"
+        ],
+        [
+          "Build timeline/list and event inspector",
+          "Implement virtualization, causal links, drawer, artifact refs and inert raw-data views.",
+          "10k-event run remains navigable; keyboard/list alternative and malicious text tests pass.",
+          "afr-timeline-e2e",
+          "AFR-T08/01"
+        ],
+        [
+          "Implement completeness panel",
+          "Expose gaps, redaction, missing fields, late events and adapter limitations.",
+          "No missing value appears as valid empty response or invented completion percentage.",
+          "afr-completeness-ui",
+          "AFR-T03"
+        ],
+        [
+          "Implement safe evidence export preview",
+          "Show included/redacted content, artifacts, capture policy and version manifest before export.",
+          "Default public-safe fixture export excludes secrets; source permissions checked server-side.",
+          "afr-export-preview-tests",
+          "AFR-T01/07"
+        ],
+        [
+          "Run investigation usability test",
+          "Ask five developers to diagnose seeded complete and incomplete traces using keyboard/text alternatives.",
+          "Four of five identify issue and capture limits without moderator help; blockers fixed.",
+          "afr-investigation-study",
+          "AFR-T08"
+        ]
+      ]
+    ],
+    [
+      "A4",
+      "Replay planner and isolated execution",
+      "Runtime + security",
+      "Playback has zero live side effects; controlled modes cannot silently escape fixtures.",
+      [
+        [
+          "Build replay eligibility planner",
+          "Check required artifacts/content, environment/tool hashes, missing outputs and checkpoint support.",
+          "Every mode has explicit eligible/ineligible reason; no arbitrary process-resume promise.",
+          "afr-replay-eligibility-tests",
+          "AFR-T03/04"
+        ],
+        [
+          "Implement visual playback and output simulation",
+          "Render recorded data; match outputs by contract/arguments/ordinal/causal context.",
+          "Repeated identical calls consume correct fixture output; unmatched call fails closed.",
+          "afr-playback-sentinel-report",
+          "AFR-T04"
+        ],
+        [
+          "Implement controlled live-model runner",
+          "Broker model only, synthetic tools, scoped inputs and frozen environment manifest.",
+          "Network/production writes denied; model revision nondeterminism shown in results.",
+          "afr-live-model-tests",
+          "AFR-T05/09"
+        ],
+        [
+          "Implement controlled live-tool profile",
+          "Use synthetic app network, approved capabilities, bounded approval and stale-plan checks.",
+          "Changed fixture/target invalidates approval; sandbox gate required; cancel revokes new calls.",
+          "afr-live-tool-security-report",
+          "AFR-T05/09"
+        ],
+        [
+          "Test replay failure recovery",
+          "Kill executor, expire approval, remove artifact, inject output mismatch and deny provider.",
+          "Unknown effects and missing evidence never become success; no silent live fallback.",
+          "afr-replay-fault-report",
+          "AFR-T04/05/09"
+        ]
+      ]
+    ],
+    [
+      "A5",
+      "Regression cases and comparison",
+      "Backend + frontend",
+      "Failure-to-test flow yields portable, verifiable, versioned cases.",
+      [
+        [
+          "Implement immutable case bundles",
+          "Define manifest, safe archive import, checksum verification, lineage and schema migration.",
+          "Tampered/traversal/oversized/incompatible cases rejected; golden roundtrip preserved.",
+          "afr-case-contract-tests",
+          "AFR-T07"
+        ],
+        [
+          "Implement case wizard and verifiers",
+          "Select task slice, mode, evidence, trusted verifier and budget; preview before freeze.",
+          "Known defect fails and known fix passes independent outcome check; verifier errors separate.",
+          "afr-case-wizard-e2e",
+          "AFR-T06/09"
+        ],
+        [
+          "Implement baseline/candidate comparison",
+          "Align logical operations, show task/safety outcomes before cost and mark incomparable runs.",
+          "Environment/task mismatch and ambiguous alignment cannot display unsupported improvement claims.",
+          "afr-compare-tests",
+          "AFR-T06/08"
+        ],
+        [
+          "Implement CLI/CI export",
+          "Add validate/run/compare/report commands, JUnit/JSON outputs and documented exit codes.",
+          "No secrets on fork CI; config/error/policy/regression exits differ; fixture mode keyless.",
+          "afr-ci-example",
+          "AFR-T06/07/09"
+        ],
+        [
+          "Validate complete primary journey",
+          "Observe five users from failed trace to exported regression; test download/import in clean deployment.",
+          "Four of five finish bounded task within ten minutes; evidence and limitations retained.",
+          "afr-primary-journey-study",
+          "AFR-T06/08"
+        ]
+      ]
+    ],
+    [
+      "A6",
+      "Security, fidelity and performance qualification",
+      "QA + security",
+      "Declared suite and fault matrix pass with honest capture/replay limits.",
+      [
+        [
+          "Run capture completeness benchmark",
+          "Compare captured events against independent oracle over 50 tasks and seeded omissions.",
+          "Required loss-free event coverage >=99%; 100% seeded missing/truncated cases signaled.",
+          "afr-benchmark-report",
+          "AFR-T02/03"
+        ],
+        [
+          "Attack ingestion/viewer/bundles",
+          "Run canary, XSS, cross-project, path/archive and malicious verifier corpus.",
+          "No accepted critical security failure; unsupported untrusted execution disabled.",
+          "afr-security-report",
+          "AFR-T01/07/09"
+        ],
+        [
+          "Load test SDK and service",
+          "Measure enqueue overhead, bounded buffers, sustained/burst load and large-run navigation.",
+          "Declared hardware results meet targets or supported capacity reduced and retested.",
+          "afr-load-report",
+          "AFR-T02/08"
+        ],
+        [
+          "Fault test all boundaries",
+          "Lose acks, reorder/drop events, kill workers and disconnect DB/artifact/provider dependencies.",
+          "No duplicate logical side effects; terminal states and reconciliation remain truthful.",
+          "afr-chaos-report",
+          "AFR-T02/04/05"
+        ],
+        [
+          "Review compatibility/privacy/accessibility",
+          "Verify adapter pins, content-default policy, manual assistive-tech flow and retention derivatives.",
+          "Compatibility matrix and manual review have no release blockers; privacy labels accurate.",
+          "afr-qualification-signoff",
+          "AFR-T01/08/10"
+        ]
+      ]
+    ],
+    [
+      "A7",
+      "Release, operate and evolve",
+      "Operations + maintainer",
+      "Independent install/upgrade/restore and evidence-backed release approved.",
+      [
+        [
+          "Package independent deployment",
+          "Build signed images/SDKs/CLI, sample env, scoped keys, preflight and read-only fixture demo.",
+          "Clean install needs no other product; insecure/demo modes cannot expose live execution.",
+          "afr-release-candidate",
+          "AFR-T10"
+        ],
+        [
+          "Rehearse lifecycle operations",
+          "Upgrade prior schema, drain workers, rollback compatible release, restore and reapply deletion.",
+          "Reference RPO/RTO met; traces/fixtures deleted per lineage; no stale job result accepted.",
+          "afr-ops-drill",
+          "AFR-T10"
+        ],
+        [
+          "Publish docs and evaluation artifacts",
+          "Ship quickstart, replay guarantees, API/SDK docs, benchmark data rights and negative cases.",
+          "Independent reviewer reproduces fixture benchmark without paid keys.",
+          "afr-public-evidence-pack",
+          "AFR-T06/07"
+        ],
+        [
+          "Run private alpha and triage",
+          "Onboard 3\u20135 target developers; observe install/failure-to-test tasks; fix critical friction.",
+          "Feedback tied to issues; release blockers fixed; remaining limitations explicit.",
+          "afr-alpha-summary",
+          "AFR-T08/10"
+        ],
+        [
+          "Approve release and future triggers",
+          "Sign R01\u2013R10 matrix, set owners for maintenance/advisories, choose next adapter from observed demand.",
+          "Release evidence complete; roadmap separated from implemented capabilities.",
+          "afr-v1-signoff",
+          "AFR-R01\u2013R10"
+        ]
+      ]
+    ]
+  ],
+  "SKB": [
+    [
+      "S0",
+      "Validate need and choose engine",
+      "Product + evaluation lead",
+      "Build-versus-integrate and experiment method approved before full implementation.",
+      [
+        [
+          "Interview skill maintainers",
+          "Collect five skill evaluation workflows and tasks they cannot assess today.",
+          "Needs distinguish evidence/experiment problems from demand for another generic leaderboard.",
+          "skb-discovery.md",
+          "discovery review"
+        ],
+        [
+          "Run SkillEvaluator/Inspect comparison",
+          "Execute same ten synthetic tasks in pinned backends and review licenses/trust boundaries.",
+          "Observed compatibility, outputs, setup cost and 80%-coverage integrate/upstream gate recorded.",
+          "skb-engine-ADR",
+          "SKB-R01/03"
+        ],
+        [
+          "Define domain and gold suite",
+          "Select measurable task domain, split rules, hidden-answer ownership and helpful/harmful/no-op cases.",
+          "Suite plan has inclusion criteria and leakage controls before skill tuning.",
+          "skb-suite-plan",
+          "SKB-T03/07"
+        ],
+        [
+          "Prototype plan/results/review UX",
+          "Test package review, preregistration, spend preview and uncertain result interpretations.",
+          "Users understand static findings differ from task benefit and safety certification.",
+          "skb-prototype-study",
+          "SKB-T08"
+        ],
+        [
+          "Freeze statistical/security plan",
+          "Approve primary metric, practical margin policy, missing-data rules, reviewers and release boundaries.",
+          "No auto statistical claims before method review; untrusted live mode gated.",
+          "skb-analysis-threat-baseline",
+          "SKB-T06/07"
+        ]
+      ]
+    ],
+    [
+      "S1",
+      "Safe packages and provenance",
+      "Backend + security",
+      "Inspection cannot execute package-controlled code; approved versions immutable.",
+      [
+        [
+          "Implement bounded upload intake",
+          "Create quarantine, digest/version records and safe archive enumeration.",
+          "Traversal/symlink/device/expansion/duplicate-path/oversize cases rejected.",
+          "skb-intake-tests",
+          "SKB-T01"
+        ],
+        [
+          "Implement approved repository fetch",
+          "Fetch configured host/revision through trusted service without credentials/submodule execution.",
+          "Arbitrary protocols/SSRF/local paths blocked; resolved commit stored.",
+          "skb-repo-fetch-tests",
+          "SKB-T01"
+        ],
+        [
+          "Implement package manifest and preview",
+          "Store entries/license/source and render text inertly with size limits.",
+          "Unknown license and unsupported binary/active content are visible, never silently trusted.",
+          "skb-package-ui-tests",
+          "SKB-T01/08"
+        ],
+        [
+          "Implement digest-bound approval",
+          "Maintainer approves selected execution profile; new content/version resets review.",
+          "Changed digest/profile invalidates approval; wrong role cannot promote package.",
+          "skb-approval-tests",
+          "SKB-T01/07"
+        ],
+        [
+          "Validate parser-only inspection",
+          "Instrument network/process/file activity during inspect on hostile packages.",
+          "No install hook/script/template executes; no unauthorized egress or host write occurs.",
+          "skb-static-intake-security-report",
+          "SKB-T01"
+        ]
+      ]
+    ],
+    [
+      "S2",
+      "Static checks and engine result contracts",
+      "Evaluation engineer",
+      "Findings are attributable and absent/failed scans cannot masquerade as clean.",
+      [
+        [
+          "Implement schema/format checks",
+          "Validate skill metadata/references and detect unsupported activation requirements.",
+          "Malformed skill returns bounded findings without executing helper code.",
+          "skb-format-tests",
+          "SKB-T01/05"
+        ],
+        [
+          "Integrate selected scanner/importer",
+          "Use pinned approved scanner or import signed-off results with source/version/schema checks.",
+          "Unavailable/failed/not-run states differ; imported result bound to exact package.",
+          "skb-scan-adapter",
+          "SKB-T05/09"
+        ],
+        [
+          "Build finding review model",
+          "Record source/severity/evidence/disposition/reason and preserve original findings.",
+          "False-positive/rejected/accepted-risk decisions auditable and do not rewrite scan output.",
+          "skb-finding-tests",
+          "SKB-T05"
+        ],
+        [
+          "Define execution adapter capability schema",
+          "Map selected engine tasks, activation evidence, outcome/error enums and usage/trace metadata.",
+          "Missing engine fields marked incomplete; unsupported capability rejected before dispatch.",
+          "skb-adapter-contract",
+          "SKB-T03/05"
+        ],
+        [
+          "Build package-review UI",
+          "Implement file tree, inert preview, finding filters and approval with known limitations.",
+          "Keyboard review works; no safety seal generated from static checks.",
+          "skb-package-review-e2e",
+          "SKB-T08"
+        ]
+      ]
+    ],
+    [
+      "S3",
+      "Suites and preregistered experiment planning",
+      "Backend + frontend",
+      "Validated immutable plans contain task splits, limits and analysis assumptions.",
+      [
+        [
+          "Implement suite/version and hidden data",
+          "Store task licenses/splits/fixtures; separate candidate prompts from hidden answers/scorers.",
+          "Operator/candidate cannot read hidden refs without dedicated permission; split frozen.",
+          "skb-suite-contract-tests",
+          "SKB-T02/07"
+        ],
+        [
+          "Implement plan draft/version model",
+          "Define baseline/treatment/harness/model/repeats/metric/margin/missingness configuration.",
+          "Draft edits use concurrency control; incompatible/empty plans rejected.",
+          "skb-plan-tests",
+          "SKB-T02"
+        ],
+        [
+          "Implement budget/readiness preflight",
+          "Estimate trials/calls with uncertainty and check engine/isolation/approval/provider consent.",
+          "Missing price/approval/engine produces explicit blocker or honest unknown estimate.",
+          "skb-preflight-tests",
+          "SKB-T04"
+        ],
+        [
+          "Build plan wizard and preregistration",
+          "Provide step validation, autosave, final plan/hash preview and immutable submit.",
+          "Changing package/provider/settings requires new plan/approval; repeated submit idempotent.",
+          "skb-wizard-e2e",
+          "SKB-T02/08"
+        ],
+        [
+          "Validate usability and leakage",
+          "Test task planning and hidden-answer paths with pilot users and security checks.",
+          "Four of five complete valid plan unaided; hidden data absent in browser/exports/events.",
+          "skb-plan-study",
+          "SKB-T07/08"
+        ]
+      ]
+    ],
+    [
+      "S4",
+      "Paired execution and trusted scoring",
+      "Runtime + security",
+      "Both arms isolated, intervention controlled, hidden scorer protected and spend bounded.",
+      [
+        [
+          "Implement paired scheduler/randomization",
+          "Block by task/repeat, randomize arm order and create fresh identical environments.",
+          "Baseline/treatment diff limited to declared skill activation; no memory/cache crossover.",
+          "skb-pair-oracle-tests",
+          "SKB-T03"
+        ],
+        [
+          "Run full harness inside executor",
+          "Execute untrusted task/skill/plugin loading within hardened boundary and broker calls.",
+          "No control DB/host/other-arm/scorer access; activation outcome captured.",
+          "skb-isolation-report",
+          "SKB-T03/07"
+        ],
+        [
+          "Implement independent outcome collector/scorer",
+          "Verify result digests and score in separate trusted/isolation context with hidden checks.",
+          "Candidate cannot self-report pass, edit tests or forge another trial output.",
+          "skb-scorer-security-tests",
+          "SKB-T05/07"
+        ],
+        [
+          "Enforce retries/limits/cancellation",
+          "Reserve pair/grading budgets, retry only infrastructure-safe work and record all attempts.",
+          "Runaway/429/crash/cancel cannot hide cost or turn semantic failure into selective rerun.",
+          "skb-runtime-fault-tests",
+          "SKB-T04"
+        ],
+        [
+          "Build experiment monitor",
+          "Show pair completion/imbalance, provisional state, observed/reserved spend and pause/cancel.",
+          "Partial/stopped/provider-drift runs cannot appear final; cancel pending honest.",
+          "skb-monitor-e2e",
+          "SKB-T04/08"
+        ]
+      ]
+    ],
+    [
+      "S5",
+      "Statistical analysis and inspectable results",
+      "Evaluation + statistical reviewer",
+      "Known-effect simulations pass and results disclose uncertainty/missingness.",
+      [
+        [
+          "Implement outcome taxonomy/analysis inputs",
+          "Freeze input result set, exclusions and primary denominator; keep quality/safety/error separate.",
+          "Missing arms/scans/usage remain visible and cannot be silently excluded.",
+          "skb-analysis-input-tests",
+          "SKB-T05/06"
+        ],
+        [
+          "Implement paired task-level estimates",
+          "Add cluster-aware intervals, practical margin display, per-category breakdown and cost/success.",
+          "Zero/positive/negative/correlated/degenerate simulation cases match reference within tolerance.",
+          "skb-statistical-validation",
+          "SKB-T06"
+        ],
+        [
+          "Validate optional judge pipeline",
+          "Blind arm identity, pin rubric/model, calibrate with human labels and sandbox untrusted text.",
+          "Disagreements/order effects/injection failures documented; no unreviewed auto conclusions.",
+          "skb-judge-calibration",
+          "SKB-T06/07"
+        ],
+        [
+          "Build results/evidence UI",
+          "Show effect/interval/N, compatibility, safety, exclusions, cost and per-trial trace links.",
+          "Filters do not redefine frozen headline silently; mismatched experiments marked noncomparable.",
+          "skb-results-e2e",
+          "SKB-T08"
+        ],
+        [
+          "Conduct method and UX review",
+          "Statistical reviewer approves estimands/intervals; pilot users interpret helpful/harmful/inconclusive examples.",
+          "No equivalence/winner claim unsupported by reviewed method; four of five interpret core result.",
+          "skb-method-signoff",
+          "SKB-T06/08"
+        ]
+      ]
+    ],
+    [
+      "S6",
+      "CI evidence and qualification",
+      "QA + security",
+      "Immutable reports survive roundtrip and benchmark/security limitations are explicit.",
+      [
+        [
+          "Implement versioned report/CI exporter",
+          "Bind report to package/plan/suite/engine/analysis hashes; add narrow CI publisher.",
+          "Tampered/stale/missing evidence cannot receive clean badge; fork secrets remain protected.",
+          "skb-report-ci-tests",
+          "SKB-T09"
+        ],
+        [
+          "Run 40-task held-out evaluation",
+          "Use preregistered repetitions/splits with declared helpful/harmful/no-op cases and full denominators.",
+          "Holdout not tuned; quality/safety/activation/cost and invalids all published.",
+          "skb-heldout-report",
+          "SKB-T03/05/06"
+        ],
+        [
+          "Attack trust and contamination boundaries",
+          "Attempt answer leakage, scorer tampering, package injection, exfiltration and forged results.",
+          "No critical boundary failure accepted; live feature disabled if isolation gate fails.",
+          "skb-security-qualification",
+          "SKB-T01/07"
+        ],
+        [
+          "Load/fault test plans and results",
+          "Exercise 1k trials/records, concurrent submit/cancel, stale attempts and provider outages.",
+          "Declared UI/validation targets met; no duplicate experiment or lost budget accounting.",
+          "skb-load-chaos-report",
+          "SKB-T02/04/08"
+        ],
+        [
+          "Audit reproduction and documentation",
+          "Independent reviewer rebuilds fixture report and checks statistics/config/license lineage.",
+          "Fixture report reproducible keylessly; live nondeterminism and costs disclosed.",
+          "skb-reproduction-review",
+          "SKB-T09/10"
+        ]
+      ]
+    ],
+    [
+      "S7",
+      "Private release and maintenance",
+      "Operations + maintainer",
+      "Install/restore/alpha/signoff completed without overstating evaluation authority.",
+      [
+        [
+          "Package standalone install",
+          "Build pinned engine/executor profiles, offline sample reports and safe provider setup.",
+          "SkillBench installs without AFR server; optional AFR trace links degrade gracefully.",
+          "skb-release-candidate",
+          "SKB-T10"
+        ],
+        [
+          "Rehearse lifecycle/deletion",
+          "Upgrade/restore plans/results/hidden artifacts, delete source derivatives and drain workers.",
+          "Immutability retained; tombstones applied; reports marked unavailable when evidence deleted.",
+          "skb-operations-drill",
+          "SKB-T10"
+        ],
+        [
+          "Run maintainer alpha",
+          "Onboard 3\u20135 skill maintainers to inspect/plan/run/read a bounded experiment.",
+          "Observed friction fixed; results not marketed as universal certification.",
+          "skb-alpha-summary",
+          "SKB-T08/10"
+        ],
+        [
+          "Publish method and integration docs",
+          "Document backend decision, controlled comparison, missingness, limitations and benchmark rights.",
+          "External reviewer can identify exact conditions behind any report.",
+          "skb-docs-and-method",
+          "SKB-T06/09"
+        ],
+        [
+          "Sign release and future gates",
+          "Approve R01\u2013R10, dependency maintenance and second-harness criteria.",
+          "No public arbitrary submissions/leaderboard until separate abuse/gaming/isolation gates pass.",
+          "skb-v1-signoff",
+          "SKB-R01\u2013R10"
+        ]
+      ]
+    ]
+  ],
+  "EVF": [
+    [
+      "E0",
+      "Define domain and annotation policy",
+      "Product + domain reviewer",
+      "Narrow schema, public corpus rights, evidence semantics and parser choice approved.",
+      [
+        [
+          "Interview target analysts",
+          "Observe five annual-report extraction/review workflows and recurring errors.",
+          "Field choices and review priorities grounded in concrete analyst tasks.",
+          "evf-discovery.md",
+          "discovery review"
+        ],
+        [
+          "Freeze semantic schema",
+          "Choose 8\u201312 fields with currency/scale/period/missingness and arithmetic applicability rules.",
+          "Ambiguous field policies have examples and domain reviewer signoff.",
+          "evf-schema-guide",
+          "EVF-T04/05"
+        ],
+        [
+          "Assemble licensed corpus/splits",
+          "Select 100 reports with issuer-family splits, rights/download hashes and challenge categories.",
+          "40/20/40 split frozen; redistribution rights or retrieval recipe documented.",
+          "evf-corpus-manifest",
+          "EVF-T10"
+        ],
+        [
+          "Compare parsers on ten documents",
+          "Test Docling and one alternate for geometry/tables/OCR/versions/compute/licenses.",
+          "Observed results, asset terms and adapter decision documented without universal accuracy claim.",
+          "evf-parser-ADR",
+          "EVF-T02/03/10"
+        ],
+        [
+          "Prototype review UX and threat model",
+          "Test upload/source/field/correction/export flow and hostile-file/data-transfer boundaries.",
+          "Users understand source support versus correctness; critical trust boundaries recorded.",
+          "evf-prototype-study",
+          "EVF-T01/09"
+        ]
+      ]
+    ],
+    [
+      "E1",
+      "Safe source ingestion and versions",
+      "Backend + security",
+      "Original PDFs immutable and hostile uploads cannot enter general application execution.",
+      [
+        [
+          "Implement PDF upload preflight",
+          "Show limits/processing policy, reserve quota and accept streamed bounded upload.",
+          "Wrong type/size/quota rejected; duplicate retries do not create unintended versions.",
+          "evf-upload-tests",
+          "EVF-T01"
+        ],
+        [
+          "Implement quarantine/inspection",
+          "Sniff PDF, bounded page/encryption checks and optional scanner in isolated worker.",
+          "Malformed/encrypted/attachment/action fixtures handled safely without code/remote fetch.",
+          "evf-quarantine-report",
+          "EVF-T01"
+        ],
+        [
+          "Implement document/version lineage",
+          "Register original digest/title/origin/pages and explicit relations between reports.",
+          "Reupload/new version never overwrites source or silently changes report relationship.",
+          "evf-version-tests",
+          "EVF-T02"
+        ],
+        [
+          "Implement library/status UI",
+          "Show source version, pages, warnings, stage/review counts and keyboard upload states.",
+          "Empty/retry/denied/partial/unsupported states recoverable without content leakage.",
+          "evf-library-e2e",
+          "EVF-T01/09"
+        ],
+        [
+          "Verify source access/deletion links",
+          "Enforce project content access and connect all pending artifacts to lineage.",
+          "Unauthorized originals inaccessible; delete-before-parse revokes and cancels pending work.",
+          "evf-source-access-tests",
+          "EVF-T01/08"
+        ]
+      ]
+    ],
+    [
+      "E2",
+      "Isolated parsing and immutable outputs",
+      "Parser engineer",
+      "Per-page outcomes, parser assets and failed/partial states preserved.",
+      [
+        [
+          "Build parser image/profile registry",
+          "Pin parser/OCR/model assets and allowlist settings; no runtime content-driven downloads.",
+          "All model/code licenses inventoried; denied egress install/run test passes.",
+          "evf-parser-image-manifest",
+          "EVF-T01/02"
+        ],
+        [
+          "Implement per-document parser jobs",
+          "Read-only source, disposable scratch, resource/time/page quotas and bounded outputs.",
+          "Image/complexity bombs/crash/timeouts contained; control-plane unaffected.",
+          "evf-parser-security-tests",
+          "EVF-T01"
+        ],
+        [
+          "Store parse versions/raw outputs",
+          "Record source/profile/environment hashes, page statuses and immutable raw results.",
+          "Same source can have multiple parses; previous result never overwritten.",
+          "evf-parse-version-tests",
+          "EVF-T02"
+        ],
+        [
+          "Normalize text/hierarchy/tables",
+          "Map parser items into typed elements with reading order, spans/header associations and warnings.",
+          "Golden multi-column/merged-cell fixtures retain declared structure or explicit unsupported flags.",
+          "evf-normalization-tests",
+          "EVF-T04"
+        ],
+        [
+          "Implement parser recovery/progress",
+          "Persist page-stage status, handle retries/fencing/cancel and expose partial results honestly.",
+          "Worker death/duplicate completion cannot create full-success from missing pages.",
+          "evf-parser-fault-report",
+          "EVF-T01/02"
+        ]
+      ]
+    ],
+    [
+      "E3",
+      "Geometry, source viewer and evidence validation",
+      "Frontend + parser engineer",
+      "Coordinates/quotes resolve to correct immutable source; missing evidence cannot look valid.",
+      [
+        [
+          "Implement canonical coordinate transforms",
+          "Store original/normalized spaces and forward/inverse crop/rotation transforms.",
+          "0/90/180/270 rotation, crop offsets and roundtrip fixtures within one rendered pixel.",
+          "evf-geometry-oracle-tests",
+          "EVF-T03"
+        ],
+        [
+          "Implement page render/source endpoints",
+          "Serve authorized bounded page renders/originals with active features disabled and safe caching.",
+          "No active document execution/unsafe file path; cache invalidated on deletion.",
+          "evf-render-security-tests",
+          "EVF-T01/03/08"
+        ],
+        [
+          "Build PDF/text evidence viewer",
+          "Add source/page label/ordinal, zoom, highlights and accessible text alternative.",
+          "Selection highlights align on zoom/high-DPI; keyboard/text workflow usable.",
+          "evf-viewer-e2e",
+          "EVF-T03/09"
+        ],
+        [
+          "Implement evidence reference validator",
+          "Check source hash, parse/page/element/geometry/quote and OCR-source labels.",
+          "Nonexistent/mismatched citations rejected; normalization never fabricates region/page.",
+          "evf-citation-validation",
+          "EVF-T03/05"
+        ],
+        [
+          "Review source-support edge cases",
+          "Test wrong-row, image-only/OCR quotes, multi-page evidence and deleted source.",
+          "Supported quote never implies semantic truth; missing/ambiguous support visible.",
+          "evf-evidence-edge-report",
+          "EVF-T05"
+        ]
+      ]
+    ],
+    [
+      "E4",
+      "Typed extraction and validation",
+      "Extraction + domain engineer",
+      "Values retain units/period/source and uncertain facts route to review.",
+      [
+        [
+          "Implement schema/value types",
+          "Decimal strings, periods/currency/scale, raw values and missing reasons.",
+          "Locale/negative/dash/zero/percentage/footnote golden tests pass without float corruption.",
+          "evf-value-semantic-tests",
+          "EVF-T04"
+        ],
+        [
+          "Implement deterministic extraction baseline",
+          "Extract selected fields/tables using structural candidates and declared rules.",
+          "Each proposal has evidence or explicit unsupported state; baseline performance recorded.",
+          "evf-baseline-extraction",
+          "EVF-T04/05"
+        ],
+        [
+          "Add optional schema-constrained model extractor",
+          "Broker approved relevant content only; no tools; validate output and consent.",
+          "No unauthorized external transfer; invented claims/citations flagged or rejected.",
+          "evf-model-extractor-tests",
+          "EVF-T04/05"
+        ],
+        [
+          "Implement validators/review priority",
+          "Check types/units/periods/arithmetic/contradictions and separate risk signals from confidence.",
+          "Wrong-row/scale/period fixtures detected; no invented probability/automatic high-stakes approval.",
+          "evf-validation-report",
+          "EVF-T05"
+        ],
+        [
+          "Implement extraction version/API",
+          "Freeze schema/parse/extractor hashes and proposal output; idempotent jobs and queries.",
+          "Re-extract never overwrites reviewed version; errors/partial results explicit.",
+          "evf-extraction-contract-tests",
+          "EVF-T02/04"
+        ]
+      ]
+    ],
+    [
+      "E5",
+      "Review, correction, version diff and export",
+      "Frontend + backend",
+      "Analysts correct errors with history and export exact reviewed versions.",
+      [
+        [
+          "Build review queue/workspace",
+          "Implement evidence-linked field/table form, warnings, raw/normalized values and next-review action.",
+          "Keyboard/source-text alternative works; source selection never silently edits value.",
+          "evf-review-e2e",
+          "EVF-T05/09"
+        ],
+        [
+          "Implement revisioned corrections",
+          "Accept/correct/reject with reason, evidence changes, dependent validation and If-Match.",
+          "Conflicting edits show base/mine/current; no lost update or stale approval.",
+          "evf-review-conflict-tests",
+          "EVF-T06"
+        ],
+        [
+          "Implement explicit version comparison",
+          "Compare related source/extraction versions accounting for scale/currency/period.",
+          "Processing-only/source changes distinct; old review not copied to new evidence automatically.",
+          "evf-diff-tests",
+          "EVF-T02/04/06"
+        ],
+        [
+          "Implement export readiness/manifest",
+          "Freeze selected revision, JSON/CSV + evidence metadata, warnings and formula-safe cells.",
+          "Roundtrip preserves typed values/state; incomplete exports labeled; no permanent signed URLs.",
+          "evf-export-roundtrip",
+          "EVF-T07"
+        ],
+        [
+          "Validate analyst primary journey",
+          "Five users find seeded wrong-row value, correct evidence/value and export reviewed output.",
+          "Four of five complete without help; trust confusion and accessibility blockers fixed.",
+          "evf-primary-journey-study",
+          "EVF-T06/07/09"
+        ]
+      ]
+    ],
+    [
+      "E6",
+      "Ground truth, held-out quality and hardening",
+      "QA + domain reviewers",
+      "Measurements are independently labeled, honest about coverage and secure.",
+      [
+        [
+          "Annotate/adjudicate corpus",
+          "Two annotators label fields/regions/tables; resolve disagreements and record policy changes.",
+          "Gold has source/version/label provenance; final holdout not used for tuning.",
+          "evf-gold-annotation-log",
+          "EVF-T10"
+        ],
+        [
+          "Run held-out extraction benchmark",
+          "Report per-field/class joint correctness, citations, coverage/abstention and costs/failures.",
+          "Targets met on declared scope or scope narrowed and fresh holdout evaluation planned.",
+          "evf-quality-report",
+          "EVF-T04/05/10"
+        ],
+        [
+          "Run hostile-document/security tests",
+          "Exercise malformed PDFs, parser egress, XSS, cross-project and external model consent.",
+          "No critical accepted boundary failure; parser cannot access application secrets/network.",
+          "evf-security-report",
+          "EVF-T01/05"
+        ],
+        [
+          "Load/fault test pipeline/review/export",
+          "Kill parser/export worker, expire lease, lose store, conflict edits and delete during processing.",
+          "Missing pages never appear reviewed; idempotency/fencing/recovery and UI states correct.",
+          "evf-chaos-load-report",
+          "EVF-T02/06/07/08"
+        ],
+        [
+          "Audit geometry/accessibility/claims",
+          "Independent review of transforms, provenance language, risk labels and assistive-tech flow.",
+          "All geometry tests pass; no uncalibrated probability or fabricated evidence accepted.",
+          "evf-qualification-signoff",
+          "EVF-T03/09/10"
+        ]
+      ]
+    ],
+    [
+      "E7",
+      "Private release, lifecycle and outlook",
+      "Operations + maintainer",
+      "Standalone deployment and full derivative lifecycle validated.",
+      [
+        [
+          "Package standalone release/demo",
+          "Ship parser models/profile manifests, safe sample PDFs, keyless fixture demo and install docs.",
+          "Runs without AFR/SKB server; public demo cannot accept uploads or paid execution.",
+          "evf-release-candidate",
+          "EVF-T01/10"
+        ],
+        [
+          "Rehearse deletion/restore/upgrade",
+          "Purge source/render/text/extraction/export lineage, restore backup with tombstones and migrate versions.",
+          "No deleted derivative readable after restore; reference RPO/RTO and rollback verified.",
+          "evf-lifecycle-drill",
+          "EVF-T08"
+        ],
+        [
+          "Run analyst alpha",
+          "Onboard 3\u20135 analysts on in-scope public documents and gather correction/export friction.",
+          "Critical usability/data-integrity issues fixed; unsupported classes prominently labeled.",
+          "evf-alpha-summary",
+          "EVF-T09/10"
+        ],
+        [
+          "Publish benchmark/operations docs",
+          "Ship annotation rules, rights manifest, performance environment, failure gallery and parser/security runbooks.",
+          "Independent reviewer can reproduce accessible fixture evidence and understand limits.",
+          "evf-public-evidence-pack",
+          "EVF-T10"
+        ],
+        [
+          "Approve release and expansion gates",
+          "Sign R01\u2013R10, maintenance owners and per-format/language calibration/re-evaluation policy.",
+          "No broadened accuracy/security claim without new evidence; roadmap not represented as delivered.",
+          "evf-v1-signoff",
+          "EVF-R01\u2013R10"
+        ]
+      ]
+    ]
+  ]
+}

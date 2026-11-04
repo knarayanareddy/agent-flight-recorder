@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Trial.json",
+  "title": "Trial",
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "repeat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "arm": {
+      "type": "string",
+      "enum": [
+        "baseline",
+        "treatment"
+      ]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "infra_error",
+        "policy_block",
+        "activation_failed",
+        "cancelled"
+      ]
+    },
+    "cost": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "currency": {
+      "const": "EUR"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "trace_artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "task_id",
+    "repeat",
+    "arm",
+    "outcome",
+    "cost",
+    "currency",
+    "attempt"
+  ],
+  "additionalProperties": false
+}

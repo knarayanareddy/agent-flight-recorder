@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/PackageReview.json",
+  "title": "PackageReview",
+  "type": "object",
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "rejected"
+      ]
+    },
+    "package_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "decision",
+    "package_sha256",
+    "reason"
+  ],
+  "additionalProperties": false
+}

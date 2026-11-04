@@ -1,0 +1,31 @@
+requirement,product,description,test_suites,phases,implementing_tasks,evidence_status
+AFR-R01,AFR,"metadata-first capture, safe redaction",AFR-T01,A1–A2,AFR-A1-02;AFR-A1-03;AFR-A2-01;AFR-A2-05;AFR-A3-02;AFR-A3-04;AFR-A6-02;AFR-A6-05,planned / not executed
+AFR-R02,AFR,"idempotent, out-of-order ingestion",AFR-T02,A2,AFR-A1-01;AFR-A1-03;AFR-A2-01;AFR-A2-02;AFR-A2-05;AFR-A6-01;AFR-A6-03;AFR-A6-04,planned / not executed
+AFR-R03,AFR,explicit completeness and causal limitations,AFR-T03,A2–A3,AFR-A1-01;AFR-A2-03;AFR-A2-05;AFR-A3-03;AFR-A4-01;AFR-A6-01,planned / not executed
+AFR-R04,AFR,no side effects in playback,AFR-T04,A4,AFR-A0-03;AFR-A4-01;AFR-A4-02;AFR-A4-05;AFR-A6-04,planned / not executed
+AFR-R05,AFR,live replay authorization and safe targets,AFR-T05,A4,AFR-A0-03;AFR-A4-03;AFR-A4-04;AFR-A4-05;AFR-A6-04,planned / not executed
+AFR-R06,AFR,trace-to-test with independently validated result,AFR-T06,A5,AFR-A1-04;AFR-A5-02;AFR-A5-03;AFR-A5-04;AFR-A5-05;AFR-A7-03,planned / not executed
+AFR-R07,AFR,versioned portable fixtures,AFR-T07,A5,AFR-A3-04;AFR-A5-01;AFR-A5-04;AFR-A6-02;AFR-A7-03,planned / not executed
+AFR-R08,AFR,useful accessible timeline/diff,AFR-T08,A3,AFR-A0-04;AFR-A2-04;AFR-A3-01;AFR-A3-02;AFR-A3-05;AFR-A5-03;AFR-A5-05;AFR-A6-03;AFR-A6-05;AFR-A7-04,planned / not executed
+AFR-R09,AFR,isolated safe evaluator,AFR-T09,A4–A6,AFR-A4-03;AFR-A4-04;AFR-A4-05;AFR-A5-02;AFR-A5-04;AFR-A6-02,planned / not executed
+AFR-R10,AFR,deploy/restore/delete/rollback,AFR-T10,A7,AFR-A6-05;AFR-A7-01;AFR-A7-02;AFR-A7-04,planned / not executed
+SKB-R01,SKB,safe immutable skill/source intake,SKB-T01,S1–S2,SKB-S1-01;SKB-S1-02;SKB-S1-03;SKB-S1-04;SKB-S1-05;SKB-S2-01;SKB-S6-03,planned / not executed
+SKB-R02,SKB,immutable preregistered experiment,SKB-T02,S3,SKB-S3-01;SKB-S3-02;SKB-S3-04;SKB-S6-04,planned / not executed
+SKB-R03,SKB,"paired baseline/treatment, contamination controls",SKB-T03,S4,SKB-S0-03;SKB-S2-04;SKB-S4-01;SKB-S4-02;SKB-S6-02,planned / not executed
+SKB-R04,SKB,"budgets, cancellation, retry accounting",SKB-T04,S4,SKB-S3-03;SKB-S4-04;SKB-S4-05;SKB-S6-04,planned / not executed
+SKB-R05,SKB,"distinguish quality, security and runtime errors",SKB-T05,S2/S5,SKB-S2-01;SKB-S2-02;SKB-S2-03;SKB-S2-04;SKB-S4-03;SKB-S5-01;SKB-S6-02,planned / not executed
+SKB-R06,SKB,defensible statistics and no false certainty,SKB-T06,S5,SKB-S0-05;SKB-S5-01;SKB-S5-02;SKB-S5-03;SKB-S5-05;SKB-S6-02;SKB-S7-04,planned / not executed
+SKB-R07,SKB,trusted scoring outside candidate reach,SKB-T07,S4/S6,SKB-S0-03;SKB-S0-05;SKB-S1-04;SKB-S3-01;SKB-S3-05;SKB-S4-02;SKB-S4-03;SKB-S5-03;SKB-S6-03,planned / not executed
+SKB-R08,SKB,accessible evidence-first results,SKB-T08,S3/S5,SKB-S0-04;SKB-S1-03;SKB-S2-05;SKB-S3-04;SKB-S3-05;SKB-S4-05;SKB-S5-04;SKB-S5-05;SKB-S6-04;SKB-S7-03,planned / not executed
+SKB-R09,SKB,versioned machine-readable CI evidence,SKB-T09,S6,SKB-S2-02;SKB-S6-01;SKB-S6-05;SKB-S7-04,planned / not executed
+SKB-R10,SKB,reproducible private release,SKB-T10,S7,SKB-S6-05;SKB-S7-01;SKB-S7-02;SKB-S7-03,planned / not executed
+EVF-R01,EVF,safe bounded immutable upload,EVF-T01,E1–E2,EVF-E0-05;EVF-E1-01;EVF-E1-02;EVF-E1-04;EVF-E1-05;EVF-E2-01;EVF-E2-02;EVF-E2-05;EVF-E3-02;EVF-E6-03;EVF-E7-01,planned / not executed
+EVF-R02,EVF,original-to-parse version lineage,EVF-T02,E2–E3,EVF-E0-04;EVF-E1-03;EVF-E2-01;EVF-E2-03;EVF-E2-05;EVF-E4-05;EVF-E5-03;EVF-E6-04,planned / not executed
+EVF-R03,EVF,"valid page-region evidence, never fabricated",EVF-T03,E3,EVF-E0-04;EVF-E3-01;EVF-E3-02;EVF-E3-03;EVF-E3-04;EVF-E6-05,planned / not executed
+EVF-R04,EVF,typed values with currency/units/period,EVF-T04,E4,EVF-E0-02;EVF-E2-04;EVF-E4-01;EVF-E4-02;EVF-E4-03;EVF-E4-05;EVF-E5-03;EVF-E6-02,planned / not executed
+EVF-R05,EVF,source support distinct from correctness,EVF-T05,E4/E6,EVF-E0-02;EVF-E3-04;EVF-E3-05;EVF-E4-02;EVF-E4-03;EVF-E4-04;EVF-E5-01;EVF-E6-02;EVF-E6-03,planned / not executed
+EVF-R06,EVF,review/correction with history and conflicts,EVF-T06,E5,EVF-E5-02;EVF-E5-03;EVF-E5-05;EVF-E6-04,planned / not executed
+EVF-R07,EVF,reliable export with evidence manifest,EVF-T07,E5,EVF-E5-04;EVF-E5-05;EVF-E6-04,planned / not executed
+EVF-R08,EVF,deletion reaches derivatives,EVF-T08,E7,EVF-E1-05;EVF-E3-02;EVF-E6-04;EVF-E7-02,planned / not executed
+EVF-R09,EVF,accessible evidence review,EVF-T09,E5,EVF-E0-05;EVF-E1-04;EVF-E3-03;EVF-E5-01;EVF-E5-05;EVF-E6-05;EVF-E7-03,planned / not executed
+EVF-R10,EVF,measured extraction quality and abstention,EVF-T10,E6,EVF-E0-03;EVF-E0-04;EVF-E6-01;EVF-E6-02;EVF-E6-05;EVF-E7-01;EVF-E7-03;EVF-E7-04,planned / not executed

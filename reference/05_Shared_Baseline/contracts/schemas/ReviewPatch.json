@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/ReviewPatch.json",
+  "title": "ReviewPatch",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "accept",
+        "correct",
+        "reject"
+      ]
+    },
+    "value": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scale": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "period_end": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "Evidence.json"
+      }
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "key",
+    "action",
+    "reason"
+  ],
+  "additionalProperties": false
+}

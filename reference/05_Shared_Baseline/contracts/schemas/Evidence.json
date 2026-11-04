@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Evidence.json",
+  "title": "Evidence",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "parse_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "element_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "region": {
+      "$ref": "Region.json"
+    },
+    "quote": {
+      "type": "string",
+      "maxLength": 10000
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "digital_text",
+        "ocr_text",
+        "manual_image"
+      ]
+    },
+    "support": {
+      "type": "string",
+      "enum": [
+        "supported_exact",
+        "supported_normalized",
+        "ambiguous",
+        "unsupported",
+        "source_unavailable"
+      ]
+    }
+  },
+  "required": [
+    "document_id",
+    "source_sha256",
+    "parse_id",
+    "element_id",
+    "region",
+    "quote",
+    "method",
+    "support"
+  ],
+  "additionalProperties": false
+}

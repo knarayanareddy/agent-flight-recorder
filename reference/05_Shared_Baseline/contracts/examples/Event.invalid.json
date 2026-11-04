@@ -1,0 +1,12 @@
+{
+  "schema_version": "afr-event/1",
+  "event_id": "00000000-0000-4000-8000-000000000001",
+  "run_id": "00000000-0000-4000-8000-000000000001",
+  "producer_id": "x",
+  "producer_seq": 0,
+  "event_type": "run.started",
+  "observed_at": "2026-11-03T12:00:00Z",
+  "capture_policy_id": "00000000-0000-4000-8000-000000000001",
+  "payload": {},
+  "undeclared_field": "must be rejected"
+}

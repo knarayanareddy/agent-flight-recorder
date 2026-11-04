@@ -1,0 +1,60 @@
+{
+  "baseline": "0.2.0",
+  "executed_at_utc": "2026-11-03T22:08:47.924538+00:00",
+  "python": "3.13.16",
+  "platform": "Linux-6.1.189+-x86_64-with-glibc2.41",
+  "docker_available": false,
+  "runs": [
+    {
+      "name": "baseline_tests",
+      "command": [
+        "/usr/local/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=evidence/baseline-tests.xml"
+      ],
+      "exit_code": 0,
+      "log": "evidence/baseline_tests.log"
+    },
+    {
+      "name": "contract_consumer",
+      "command": [
+        "/usr/local/bin/python",
+        "scripts/consumer_trial.py"
+      ],
+      "exit_code": 0,
+      "log": "evidence/contract_consumer.log"
+    },
+    {
+      "name": "release_gate",
+      "command": [
+        "/usr/local/bin/python",
+        "scripts/release_gate.py"
+      ],
+      "exit_code": 1,
+      "log": "evidence/release_gate.log"
+    },
+    {
+      "name": "product_smoke_without_api",
+      "command": [
+        "/usr/local/bin/python",
+        "scripts/product_acceptance.py"
+      ],
+      "exit_code": 2,
+      "log": "evidence/product_smoke_without_api.log"
+    },
+    {
+      "name": "product_journeys_without_api",
+      "command": [
+        "/usr/local/bin/python",
+        "scripts/product_journeys.py"
+      ],
+      "exit_code": 2,
+      "log": "evidence/product_journeys_without_api.log"
+    }
+  ],
+  "production_ready": false,
+  "independent_agent_trial": false,
+  "application_implemented": false
+}
