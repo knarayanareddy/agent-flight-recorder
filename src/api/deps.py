@@ -1,9 +1,9 @@
 """FastAPI dependency injection utilities with fail-closed authorization."""
 from typing import Optional, Callable
-from fastapi import Header, HTTPException, status, Depends, Path
-from src.core.database import get_db_session
-from src.core.security import verify_token, UserContext
 import uuid
+from fastapi import Header, HTTPException, status, Depends, Path, Request
+from src.core.security import verify_token, UserContext
+
 
 async def get_current_user(authorization: Optional[str] = Header(None)) -> UserContext:
     """Authenticate caller via Bearer token.
@@ -24,6 +24,7 @@ async def get_current_user(authorization: Optional[str] = Header(None)) -> UserC
         )
     return ctx
 
+
 async def require_org_admin(user: UserContext = Depends(get_current_user)) -> UserContext:
     """Enforce Organization Admin privilege (separate from project roles)."""
     if user.org_role != "admin":
@@ -33,31 +34,57 @@ async def require_org_admin(user: UserContext = Depends(get_current_user)) -> Us
         )
     return user
 
-def require_project_role(required_role: str) -> Callable:
-    """Enforce capability-based project authorization.
-    Does NOT trust caller-supplied role headers.
+
+def require_project_capability(required_capability: str) -> Callable:
+    """Enforce capability-based project authorization for routes containing {project_id} in path.
+    Requires an explicit Path parameter with no default value.
     """
-    CAPABILITIES = {
-        "viewer": {"viewer", "analyst", "operator", "maintainer"},
-        "analyst": {"analyst", "maintainer"},
-        "operator": {"operator", "maintainer"},
-        "maintainer": {"maintainer"}
-    }
-    allowed = CAPABILITIES.get(required_role, {required_role})
-    
-    async def role_checker(
-        project_id: Optional[str] = Path(None),
+    async def project_capability_checker(
+        project_id: str = Path(..., description="Target project identifier"),
         user: UserContext = Depends(get_current_user)
     ) -> UserContext:
-        if project_id:
-            role = user.project_roles.get(str(project_id))
-            if not role or role not in allowed:
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail=f"Insufficient project privileges: requires '{required_role}' capability"
-                )
+        if not user.has_project_capability(project_id, required_capability):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Insufficient project privileges: requires '{required_capability}' capability"
+            )
         return user
-    return role_checker
+    return project_capability_checker
+
+
+# Backward-compatibility alias for project-path routes
+require_project_role = require_project_capability
+
+
+def require_object_capability(required_capability: str) -> Callable:
+    """Enforce capability-based authorization for object routes lacking {project_id} in path
+    (e.g., /artifacts/{artifact_id}, /jobs/{job_id}, /uploads/{upload_id}).
+
+    Fail-closed: In B00 baseline before runtime object-to-project DB resolution (B02/B04),
+    verifies project scope via the X-Project-Id header. If absent or caller lacks the required
+    capability on that project, fails closed with 403 Forbidden.
+    """
+    async def object_capability_checker(
+        request: Request,
+        x_project_id: Optional[str] = Header(None, alias="X-Project-Id"),
+        user: UserContext = Depends(get_current_user)
+    ) -> UserContext:
+        if not x_project_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=(
+                    f"Access denied: Object-to-project scope cannot be verified without project context. "
+                    f"Requires '{required_capability}' capability."
+                )
+            )
+        if not user.has_project_capability(x_project_id, required_capability):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Insufficient project privileges: requires '{required_capability}' capability on scoped project"
+            )
+        return user
+    return object_capability_checker
+
 
 async def verify_idempotency_key(idempotency_key: Optional[str] = Header(None)) -> str:
     """Validate Idempotency-Key header is a valid UUIDv4 for mutating requests."""

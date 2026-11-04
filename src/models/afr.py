@@ -1,14 +1,16 @@
 """SQLAlchemy ORM models for Agent Flight Recorder."""
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text, JSON
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from src.core.database import Base
-import uuid, datetime
+import uuid
+import datetime
+
 
 class DomainEntity(Base):
     """Domain model matching database/migrations/001_baseline.sql."""
     __tablename__ = "entities"
     __table_args__ = {"schema": "afr"}
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), nullable=False)
     name = Column(String(120), nullable=False)

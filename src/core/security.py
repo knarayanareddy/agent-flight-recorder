@@ -1,6 +1,6 @@
 """Security, token parsing, and metadata redaction utilities."""
-from typing import Dict, Any, Optional
-from pydantic import BaseModel
+from typing import Dict, Any, Optional, Set
+from pydantic import BaseModel, field_validator
 
 FORBIDDEN_METADATA_KEYS = {
     'api_key', 'authorization', 'access_token', 'refresh_token',
@@ -12,17 +12,55 @@ ALLOWED_METADATA_KEYS = {
     'redacted', 'reason'
 }
 
+
 class UserContext(BaseModel):
     user_id: str
     organization_id: str
-    org_role: str  # "member" or "admin"
-    project_roles: Dict[str, str] = {}  # project_id -> role
+    org_role: str = "member"  # "member" or "admin"
+    project_roles: Dict[str, Set[str]] = {}  # project_id -> Set[role]
+
+    @field_validator("project_roles", mode="before")
+    @classmethod
+    def normalize_project_roles(cls, v):
+        if not isinstance(v, dict):
+            return {}
+        normalized = {}
+        for proj_id, roles in v.items():
+            if isinstance(roles, str):
+                normalized[str(proj_id)] = {roles}
+            elif isinstance(roles, (list, tuple, set)):
+                normalized[str(proj_id)] = {str(r) for r in roles}
+            else:
+                normalized[str(proj_id)] = set()
+        return normalized
+
+    def has_project_capability(self, project_id: str, required_capability: str) -> bool:
+        """Check if user holds the required capability for the specified project.
+        Supports union of multiple granted roles (e.g., analyst + operator).
+        Capability hierarchy:
+          - viewer: granted by viewer, analyst, operator, maintainer
+          - analyst: granted by analyst, maintainer
+          - operator: granted by operator, maintainer
+          - maintainer: granted by maintainer
+        """
+        roles = self.project_roles.get(str(project_id), set())
+        CAPABILITY_EXPANSION = {
+            "viewer": {"viewer"},
+            "analyst": {"viewer", "analyst"},
+            "operator": {"viewer", "operator"},
+            "maintainer": {"viewer", "analyst", "operator", "maintainer"}
+        }
+        user_caps: Set[str] = set()
+        for r in roles:
+            user_caps.update(CAPABILITY_EXPANSION.get(r, {r}))
+        return required_capability in user_caps
+
 
 def redact_metadata(value: Dict[str, Any]) -> Dict[str, Any]:
     """Allowlisted metadata scrubbing; strips credentials and nested blobs."""
     if not isinstance(value, dict):
         raise ValueError("Metadata must be a dictionary")
-    
+
     sanitized = {}
     for k, v in value.items():
         k_lower = k.lower()
@@ -38,46 +76,11 @@ def redact_metadata(value: Dict[str, Any]) -> Dict[str, Any]:
         sanitized[k] = v
     return sanitized
 
-# Deterministic test identities for test harness (never valid production credentials)
-VALID_TEST_TOKENS = {
-    "test-token-admin": UserContext(
-        user_id="00000000-0000-4000-8000-000000000001",
-        organization_id="00000000-0000-4000-8000-000000000000",
-        org_role="admin",
-        project_roles={"00000000-0000-4000-8000-000000000001": "maintainer"}
-    ),
-    "test-token-maintainer": UserContext(
-        user_id="00000000-0000-4000-8000-000000000002",
-        organization_id="00000000-0000-4000-8000-000000000000",
-        org_role="member",
-        project_roles={"00000000-0000-4000-8000-000000000001": "maintainer"}
-    ),
-    "test-token-operator": UserContext(
-        user_id="00000000-0000-4000-8000-000000000003",
-        organization_id="00000000-0000-4000-8000-000000000000",
-        org_role="member",
-        project_roles={"00000000-0000-4000-8000-000000000001": "operator"}
-    ),
-    "test-token-analyst": UserContext(
-        user_id="00000000-0000-4000-8000-000000000004",
-        organization_id="00000000-0000-4000-8000-000000000000",
-        org_role="member",
-        project_roles={"00000000-0000-4000-8000-000000000001": "analyst"}
-    ),
-    "test-token-viewer": UserContext(
-        user_id="00000000-0000-4000-8000-000000000005",
-        organization_id="00000000-0000-4000-8000-000000000000",
-        org_role="member",
-        project_roles={"00000000-0000-4000-8000-000000000001": "viewer"}
-    )
-}
 
 def verify_token(token: str) -> Optional[UserContext]:
-    """Verify bearer token against known test identities or OIDC provider.
-    Fail-closed: Returns None if token is invalid or missing.
+    """Verify bearer token against cryptographic signature / OIDC claims.
+    Fail-closed: Returns None in production runtime until B03 identity
+    integration is configured. Never accepts static test bypass credentials.
+    Synthetic identities are injected exclusively via test dependency overrides.
     """
-    if not token:
-        return None
-    if token.startswith("Bearer "):
-        token = token[7:]
-    return VALID_TEST_TOKENS.get(token)
+    return None

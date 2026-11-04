@@ -1,7 +1,8 @@
 """Independent Acceptance Tests against Reference Oracles for AFR."""
-from reference.oracles import redact, EventOracle, recorded_match, archive_entries
+from reference.oracles import redact, EventOracle, recorded_match
 import pytest
 import copy
+
 
 def test_metadata_capture_redacts_credentials():
     meta = {
@@ -21,6 +22,7 @@ def test_metadata_capture_redacts_credentials():
     assert redacted['name'] == 'search_tool'
     assert redacted['input_tokens'] == 120
 
+
 def test_event_oracle_atomic_batch_and_duplicates():
     oracle = EventOracle()
     ev = {
@@ -33,20 +35,25 @@ def test_event_oracle_atomic_batch_and_duplicates():
     b1 = oracle.batch('proj-1', [ev])
     assert len(b1['accepted']) == 1
     assert len(b1['duplicates']) == 0
-    
+
     b2 = oracle.batch('proj-1', [ev])
     assert len(b2['accepted']) == 0
     assert b2['duplicates'] == [ev['event_id']]
-    
+
     tampered = copy.deepcopy(ev)
     tampered['payload'] = {'step': 'tampered'}
     with pytest.raises(ValueError):
         oracle.batch('proj-1', [tampered])
 
+
 def test_recorded_matching_no_live_fallback():
-    records = [{'tool': 'fetch', 'contract_hash': 'a'*64, 'args': {'url': 'https://example.com'}, 'ordinal': 0, 'output': {'status': 200}}]
-    res = recorded_match(records, 'fetch', 'a'*64, {'url': 'https://example.com'}, 0)
+    records = [{'tool': 'fetch',
+                'contract_hash': 'a' * 64,
+                'args': {'url': 'https://example.com'},
+                'ordinal': 0,
+                'output': {'status': 200}}]
+    res = recorded_match(records, 'fetch', 'a' * 64, {'url': 'https://example.com'}, 0)
     assert res == {'status': 200}
-    
+
     with pytest.raises(ValueError):
-        recorded_match(records, 'fetch', 'a'*64, {'url': 'https://other.com'}, 0)
+        recorded_match(records, 'fetch', 'a' * 64, {'url': 'https://other.com'}, 0)

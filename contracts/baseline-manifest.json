@@ -293,11 +293,11 @@
     "reference/05_Shared_Baseline/tests/test_baseline.py": "81b4ecf3b9b39d3f4a62586c021edd6fa69a3206ea0145bc081a9e61f0cbb0a9",
     "reference/README.md": "99d965201cb894ed6fc75523c1df57b5026f11126fccd1d6ce23ade05ff343fd",
     "reference/oracles.py": "9260698f31db2ccf307b92f5caf43294723c6719f666bd85d18da95187068289",
-    "scripts/build_contracts.py": "8b39e05220d744b3f28e427bd6e7eff90cbec96e288cb5b98d669c43b0602d7b",
+    "scripts/build_contracts.py": "5fc22f422227e7e0671e9ac74adf7959fc7b8c4abb77c664d9d9364f114bfb09",
     "scripts/build_fixtures.py": "221b0c912600a876b387878925c497c7dfc29d12ae5877b007a6b85d5ec099f5",
     "scripts/consumer_trial.py": "a069b13ce082363b2fd2e6e888165bc7f8d6c989eb7c2d3a10aa4e6aecee8834",
     "scripts/product_acceptance.py": "b73d9e48e9546b7a79c05813f36b6ee6a7fdb59af8054d56413c91c2f5d44cdd",
-    "scripts/product_journeys.py": "28e75cab8b0fc2418d3613a25b801a94424bc9f4e46bc0a0cf5692c6edf2cacb",
+    "scripts/product_journeys.py": "e9dad32b60831088c1f5626b336892b6aad394efca0673b4377533e0d81982e9",
     "scripts/product_smoke.py": "266f71f82bbee1b508fcca96725bd95b51ac32b2fbeba4e6495dfc570092bdde",
     "scripts/release_gate.py": "6b895a394038c4455ecf5e0d958deba4bd06dfe555c6fa68fbe5c54b955484f3",
     "scripts/verify_manifest.py": "3cdf9241554fd61b57601d57dc8477c8d5aac7be5b88011e1201ad80e55f7509"

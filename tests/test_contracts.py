@@ -15,27 +15,30 @@ EXAMPLES_DIR = ROOT / "contracts/examples"
 SCHEMAS = {f.stem: json.loads(f.read_text()) for f in SCHEMAS_DIR.glob("*.json")}
 REGISTRY = Registry().with_resources((s.get("$id", f"urn:{k}"), Resource.from_contents(s)) for k, s in SCHEMAS.items())
 
+
 def get_validator(name: str):
     return Draft202012Validator(SCHEMAS[name], registry=REGISTRY, format_checker=FormatChecker())
+
 
 @pytest.mark.parametrize("schema_name", sorted(SCHEMAS.keys()))
 def test_schema_syntax_and_examples(schema_name: str):
     """Test schema validity and positive/negative examples."""
     schema = SCHEMAS[schema_name]
     Draft202012Validator.check_schema(schema)
-    
+
     val = get_validator(schema_name)
     valid_file = EXAMPLES_DIR / f"{schema_name}.valid.json"
     invalid_file = EXAMPLES_DIR / f"{schema_name}.invalid.json"
-    
+
     if valid_file.exists():
         data = json.loads(valid_file.read_text())
         val.validate(data)
-        
+
     if invalid_file.exists():
         data = json.loads(invalid_file.read_text())
         errors = list(val.iter_errors(data))
         assert len(errors) > 0, f"Expected validation errors for negative example: {invalid_file.name}"
+
 
 def test_endpoint_policy_operations():
     """Verify endpoint policy operations map to valid roles."""

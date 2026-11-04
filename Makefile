@@ -1,8 +1,8 @@
-.PHONY: help setup dev test lint verify gate clean
+.PHONY: help setup dev test lint verify gate clean test-baseline product-smoke product-acceptance product-journeys
 
 help:
 	@echo "Available commands for agent-flight-recorder:"
-	@echo "  make setup   - Create venv and install dependencies"
+	@echo "  make setup   - Create venv and install all dependencies"
 	@echo "  make dev     - Run FastAPI development server on port 8000"
 	@echo "  make test    - Run pytest test suite"
 	@echo "  make lint    - Run code linting"
@@ -12,7 +12,7 @@ help:
 
 setup:
 	python3 -m venv .venv
-	. .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
+	. .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt -r requirements-baseline.txt
 
 dev:
 	uvicorn src.main:app --reload --host 0.0.0.0 --port 8000

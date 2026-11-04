@@ -1,16 +1,24 @@
 """API routes for Shared Foundation."""
-from typing import List, Optional
-from fastapi import APIRouter, Depends, status, Path as PathParam, Response, HTTPException
+from typing import List
+from fastapi import APIRouter, Depends, status, Path as PathParam, HTTPException
 from pydantic import BaseModel
-from src.api.deps import require_org_admin, require_project_role, verify_idempotency_key
+from src.api.deps import (
+    get_current_user,
+    require_org_admin,
+    require_project_capability,
+    require_object_capability,
+    verify_idempotency_key
+)
 from src.core.security import UserContext
 
 router = APIRouter()
+
 
 class ProjectCreate(BaseModel):
     name: str
     content_capture: str = "metadata_only"
     external_transfer: bool = False
+
 
 class Project(BaseModel):
     id: str
@@ -20,10 +28,12 @@ class Project(BaseModel):
     revision: int
     created_at: str
 
+
 class UploadCreate(BaseModel):
     expected_size: int
     expected_sha256: str
     media_type: str = "application/octet-stream"
+
 
 class Upload(BaseModel):
     id: str
@@ -33,6 +43,7 @@ class Upload(BaseModel):
     expected_sha256: str
     expires_at: str
 
+
 class Job(BaseModel):
     id: str
     project_id: str
@@ -41,6 +52,7 @@ class Job(BaseModel):
     payload: dict
     attempt: int = 0
     created_at: str
+
 
 @router.post("/projects", response_model=Project, status_code=status.HTTP_201_CREATED)
 async def foundation_create_project(
@@ -57,16 +69,18 @@ async def foundation_create_project(
         detail="Project creation persistence is not implemented in B00 baseline. Awaiting B02 migration integration."
     )
 
+
 @router.get("/projects", response_model=List[Project], status_code=status.HTTP_200_OK)
-async def foundation_list_projects(user: UserContext = Depends(require_project_role("viewer"))):
+async def foundation_list_projects(user: UserContext = Depends(get_current_user)):
     """List accessible projects for authenticated user."""
     return []
+
 
 @router.post("/projects/{project_id}/uploads", response_model=Upload, status_code=status.HTTP_201_CREATED)
 async def foundation_create_upload(
     project_id: str = PathParam(...),
     body: UploadCreate = ...,
-    user: UserContext = Depends(require_project_role("analyst")),
+    user: UserContext = Depends(require_project_capability("analyst")),
     idemp: str = Depends(verify_idempotency_key)
 ):
     """Initiate an artifact upload session."""
@@ -75,20 +89,22 @@ async def foundation_create_upload(
         detail="Artifact storage is not configured in B00 baseline. Awaiting B04 artifact integration."
     )
 
+
 @router.put("/uploads/{upload_id}/bytes", status_code=status.HTTP_200_OK)
 async def foundation_put_upload(
     upload_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("analyst"))
+    user: UserContext = Depends(require_object_capability("analyst"))
 ):
     raise HTTPException(
         status_code=status.HTTP_501_NOT_IMPLEMENTED,
         detail="Artifact storage is not configured in B00 baseline."
     )
 
+
 @router.post("/uploads/{upload_id}:finalize", status_code=status.HTTP_200_OK)
 async def foundation_finalize_upload(
     upload_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("analyst")),
+    user: UserContext = Depends(require_object_capability("analyst")),
     idemp: str = Depends(verify_idempotency_key)
 ):
     raise HTTPException(
@@ -96,31 +112,35 @@ async def foundation_finalize_upload(
         detail="Artifact storage is not configured in B00 baseline."
     )
 
+
 @router.get("/artifacts/{artifact_id}", status_code=status.HTTP_200_OK)
 async def foundation_get_artifact(
     artifact_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("analyst"))
+    user: UserContext = Depends(require_object_capability("analyst"))
 ):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Artifact not found")
+
 
 @router.get("/artifacts/{artifact_id}/bytes", status_code=status.HTTP_200_OK)
 async def foundation_download_artifact(
     artifact_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("analyst"))
+    user: UserContext = Depends(require_object_capability("analyst"))
 ):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Artifact not found")
+
 
 @router.get("/jobs/{job_id}", response_model=Job, status_code=status.HTTP_200_OK)
 async def foundation_get_job(
     job_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("viewer"))
+    user: UserContext = Depends(require_object_capability("viewer"))
 ):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Job not found")
+
 
 @router.post("/jobs/{job_id}:cancel", status_code=status.HTTP_200_OK)
 async def foundation_cancel_job(
     job_id: str = PathParam(...),
-    user: UserContext = Depends(require_project_role("operator")),
+    user: UserContext = Depends(require_object_capability("operator")),
     idemp: str = Depends(verify_idempotency_key)
 ):
     raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Jobs engine unconfigured in B00 baseline.")

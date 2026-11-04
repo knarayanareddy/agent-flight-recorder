@@ -24,10 +24,10 @@ Follow this dependency-ordered ticket queue:
 | **B00** | Contract Baseline | `contracts/*`, `tests/*` | `python scripts/verify_manifest.py && pytest tests/test_contracts.py` |
 | **B01** | Dependency & Runtime Lock | `pyproject.toml`, `requirements.txt` | Ensure clean imports and pinned versions |
 | **B02** | Database & Roles | `database/migrations/*`, `src/core/database.py`, `src/models/*` | SQLAlchemy models match `001_baseline.sql` |
-| **B03** | Identity & Authorization | `src/core/security.py`, `src/api/deps.py` | Role verification (`viewer`, `analyst`, `operator`, `maintainer`, `admin`) |
+| **B03** | Identity & Authorization | `src/core/security.py`, `src/api/deps.py` | Org roles (`member`, `admin`) + Project capabilities (`viewer`, `analyst`, `operator`, `maintainer`) |
 | **B04** | Artifact Ingestion & Deletion | `src/api/foundation.py`, `src/services/` | Chunked upload, SHA-256 verification, artifact linking |
 | **B05** | Jobs & Worker Outbox | `src/models/foundation.py`, `src/services/` | Job state machine (`queued` -> `leased` -> `running` -> `succeeded`/`failed`) |
-| **B06** | **Agent Flight Recorder Vertical Slice** | `src/api/routes_afr.py`, `src/services/` | Implement domain endpoints and core business logic |
+| **B06** | **Agent Flight Recorder Vertical Slice** | `src/api/afr.py`, `src/services/` | Implement domain endpoints and core business logic |
 | **B10** | UI & Workflow Integration | `contracts/ui-workflows.yaml` | Connect API responses to UI screen contracts |
 | **B11** | Hardening & Resilience | `infra/compose.yaml`, error handlers | RFC 7807 problem details, error codes, clean shutdown |
 
