@@ -1,44 +1,62 @@
-"""FastAPI dependency injection utilities."""
-from typing import Optional, List
-from fastapi import Header, HTTPException, status, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
+"""FastAPI dependency injection utilities with fail-closed authorization."""
+from typing import Optional, Callable
+from fastapi import Header, HTTPException, status, Depends, Path
 from src.core.database import get_db_session
-from src.core.security import verify_token_subject
+from src.core.security import verify_token, UserContext
 import uuid
 
-async def get_current_user(authorization: Optional[str] = Header(None)) -> str:
-    """Extract authenticated user ID from Authorization header."""
+async def get_current_user(authorization: Optional[str] = Header(None)) -> UserContext:
+    """Authenticate caller via Bearer token.
+    Fail-closed: Rejects unauthenticated requests with 401. Never returns mock users.
+    """
     if not authorization:
-        # Default mock user for local development if unconfigured
-        return "00000000-0000-4000-8000-000000000001"
-    sub = verify_token_subject(authorization)
-    if not sub:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid or missing authentication credentials"
+            detail="Authentication credentials required",
+            headers={"WWW-Authenticate": "Bearer"}
         )
-    return sub
+    ctx = verify_token(authorization)
+    if not ctx:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired authentication token",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
+    return ctx
 
-def require_role(required_role: str):
-    """Enforce minimum required project role."""
-    ROLE_HIERARCHY = ["viewer", "analyst", "operator", "maintainer", "admin"]
+async def require_org_admin(user: UserContext = Depends(get_current_user)) -> UserContext:
+    """Enforce Organization Admin privilege (separate from project roles)."""
+    if user.org_role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Operation requires Organization Admin privilege"
+        )
+    return user
+
+def require_project_role(required_role: str) -> Callable:
+    """Enforce capability-based project authorization.
+    Does NOT trust caller-supplied role headers.
+    """
+    CAPABILITIES = {
+        "viewer": {"viewer", "analyst", "operator", "maintainer"},
+        "analyst": {"analyst", "maintainer"},
+        "operator": {"operator", "maintainer"},
+        "maintainer": {"maintainer"}
+    }
+    allowed = CAPABILITIES.get(required_role, {required_role})
     
     async def role_checker(
-        user_id: str = Depends(get_current_user),
-        x_actor_role: Optional[str] = Header(default="admin")
-    ):
-        role = x_actor_role or "viewer"
-        if role not in ROLE_HIERARCHY:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Unknown role")
-        
-        req_idx = ROLE_HIERARCHY.index(required_role)
-        curr_idx = ROLE_HIERARCHY.index(role)
-        if curr_idx < req_idx:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=f"Operation requires '{required_role}' role or higher"
-            )
-        return role
+        project_id: Optional[str] = Path(None),
+        user: UserContext = Depends(get_current_user)
+    ) -> UserContext:
+        if project_id:
+            role = user.project_roles.get(str(project_id))
+            if not role or role not in allowed:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail=f"Insufficient project privileges: requires '{required_role}' capability"
+                )
+        return user
     return role_checker
 
 async def verify_idempotency_key(idempotency_key: Optional[str] = Header(None)) -> str:

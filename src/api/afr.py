@@ -1,8 +1,9 @@
-"""API routes for Agent Flight Recorder (AFR)."""
+"""API routes for Agent Flight Recorder (AFR) - Fail-Closed Baseline."""
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, Depends, status, Path as PathParam
+from fastapi import APIRouter, Depends, status, Path as PathParam, HTTPException
 from pydantic import BaseModel
-from src.api.deps import require_role, verify_idempotency_key
+from src.api.deps import require_project_role, verify_idempotency_key
+from src.core.security import UserContext
 
 router = APIRouter()
 
@@ -27,102 +28,89 @@ class BatchReceipt(BaseModel):
 class Run(BaseModel):
     id: str
     project_id: str
-    title: str
     state: str
-    started_at: str
+    revision: int = 1
+    event_count: int = 0
+    created_at: str
 
 class ReplayCreate(BaseModel):
-    run_id: str
-    mode: str = "deterministic"
+    case_id: str
+    case_version: int
+    mode: str = "recorded"
+    maximum_seconds: int = 30
 
 class CaseCreate(BaseModel):
     run_id: str
-    title: str
-    assertions: List[Dict[str, Any]]
+    run_revision: int
+    name: str
+    mode: str = "recorded"
+    checks: List[Dict[str, Any]]
+    fixture_artifact_ids: List[str] = []
 
-@router.post("/projects/{project_id}/afr/events:batch", response_model=BatchReceipt, status_code=status.HTTP_200_OK)
+@router.post("/projects/{project_id}/afr/events:batch", response_model=BatchReceipt, status_code=status.HTTP_202_ACCEPTED)
 async def afr_ingest_events(
     project_id: str = PathParam(...),
     body: EventBatch = ...,
-    role: str = Depends(require_role("operator"))
+    user: UserContext = Depends(require_project_role("operator"))
 ):
-    """Ingest a batch of execution trace events atomically."""
-    eids = [e.event_id for e in body.events]
-    return BatchReceipt(accepted=eids, duplicates=[])
+    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Event ingestion storage unconfigured in B00 baseline.")
 
 @router.get("/projects/{project_id}/afr/runs", response_model=List[Run], status_code=status.HTTP_200_OK)
 async def afr_list_runs(
     project_id: str = PathParam(...),
-    role: str = Depends(require_role("viewer"))
+    user: UserContext = Depends(require_project_role("viewer"))
 ):
-    """List recorded agent runs for a project."""
     return []
 
 @router.get("/afr/runs/{run_id}", response_model=Run, status_code=status.HTTP_200_OK)
 async def afr_get_run(
     run_id: str = PathParam(...),
-    role: str = Depends(require_role("viewer"))
+    user: UserContext = Depends(require_project_role("viewer"))
 ):
-    """Get metadata for a single run."""
-    import datetime
-    return Run(
-        id=run_id,
-        project_id="00000000-0000-4000-8000-000000000001",
-        title="Recorded Run",
-        state="completed",
-        started_at=datetime.datetime.utcnow().isoformat() + "Z"
-    )
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
 
 @router.get("/afr/runs/{run_id}/events", response_model=List[Event], status_code=status.HTTP_200_OK)
 async def afr_list_events(
     run_id: str = PathParam(...),
-    role: str = Depends(require_role("analyst"))
+    user: UserContext = Depends(require_project_role("analyst"))
 ):
-    """List chronological events for a run."""
-    return []
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Run not found")
 
-@router.post("/projects/{project_id}/afr/replays", status_code=status.HTTP_201_CREATED)
+@router.post("/projects/{project_id}/afr/replays", status_code=status.HTTP_202_ACCEPTED)
 async def afr_create_replay(
     project_id: str = PathParam(...),
     body: ReplayCreate = ...,
-    role: str = Depends(require_role("operator")),
+    user: UserContext = Depends(require_project_role("operator")),
     idemp: str = Depends(verify_idempotency_key)
 ):
-    """Start an offline deterministic replay session."""
-    import uuid
-    return {"replay_id": str(uuid.uuid4()), "status": "queued"}
+    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Replay engine unconfigured in B00 baseline.")
 
 @router.get("/afr/replays/{replay_id}", status_code=status.HTTP_200_OK)
 async def afr_get_replay(
     replay_id: str = PathParam(...),
-    role: str = Depends(require_role("analyst"))
+    user: UserContext = Depends(require_project_role("analyst"))
 ):
-    """Get status and diff for a replay."""
-    return {"replay_id": replay_id, "state": "passed", "matched_steps": 10}
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Replay not found")
 
 @router.post("/projects/{project_id}/afr/cases", status_code=status.HTTP_201_CREATED)
 async def afr_create_case(
     project_id: str = PathParam(...),
     body: CaseCreate = ...,
-    role: str = Depends(require_role("analyst")),
+    user: UserContext = Depends(require_project_role("analyst")),
     idemp: str = Depends(verify_idempotency_key)
 ):
-    """Convert an agent execution failure into a regression test case."""
-    import uuid
-    return {"case_id": str(uuid.uuid4()), "title": body.title}
+    raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail="Case store unconfigured in B00 baseline.")
 
 @router.get("/projects/{project_id}/afr/cases", status_code=status.HTTP_200_OK)
 async def afr_list_cases(
     project_id: str = PathParam(...),
-    role: str = Depends(require_role("analyst"))
+    user: UserContext = Depends(require_project_role("analyst"))
 ):
-    """List regression test cases."""
     return []
 
 @router.get("/afr/cases/{case_id}", status_code=status.HTTP_200_OK)
 async def afr_get_case(
     case_id: str = PathParam(...),
-    role: str = Depends(require_role("analyst"))
+    user: UserContext = Depends(require_project_role("analyst"))
 ):
-    """Get a regression test case."""
-    return {"case_id": case_id, "title": "Regression Case"}
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Case not found")

@@ -2,6 +2,7 @@
   "product": "Agent Flight Recorder",
   "baseline_version": "0.2.0",
   "files": {
+    "contracts/README.md": "7f2a46b6ec2d54844b60e8f7a4121811b1beb26bcd09b2f82f9bbd1892983a33",
     "contracts/auth-flow.yaml": "a3ccc65eba2bafe004e1e354252aadd4878a480163ee211c3412dedf25269a4e",
     "contracts/dependency-candidates.json": "022e1585c59a6935032599218f446aedce8a125b4fbf4e5e133e1bc056b7f214",
     "contracts/endpoint-policy.json": "cf0f679e5a87c432585d003d8714262001444aa4116dc7627e92c34a67500117",
@@ -76,7 +77,7 @@
     "docs/07_Deployment_and_Operations.md": "fad44542f0fb5a00c3f3c084c513f9db2ef745d551a3c9f17bb93dd7b765ea72",
     "docs/08_Acceptance_and_Queue.md": "56ddd38acd1d4f21e0d364e1daacdf280bf5855ce7d578acd9ee2905fa93a2f2",
     "database/lease_queries.sql": "e141212070f52a3720038cdccdee1bd07f3d4b0945fbf0051ba1c597b58425a3",
-    "database/migrations/001_baseline.sql": "7fdc5f46745c9d01aae5fa4d61b85cf0f3433a458d225426274f55545b1b05e5",
+    "database/migrations/001_baseline.sql": "49d6c15c9fe655ce922041a1c4b5b61ae9bf2d7ba32636c808de2949240d782c",
     "database/migrations/002_roles.sql": "90385fc0a91d3d7f1b94be65c0547de1f2d84768b7e5677f8f4f38bbd40f9bf7",
     "infra/Caddyfile": "edcc742175e1ce9e01ed048c12abb94707ac471edda42322fd74ecf19c36c311",
     "infra/compose.yaml": "794de355b239dc038f9bd3554ad77029e46e09c227be74d14bb9b3e52647c185",
@@ -296,7 +297,7 @@
     "scripts/build_fixtures.py": "221b0c912600a876b387878925c497c7dfc29d12ae5877b007a6b85d5ec099f5",
     "scripts/consumer_trial.py": "a069b13ce082363b2fd2e6e888165bc7f8d6c989eb7c2d3a10aa4e6aecee8834",
     "scripts/product_acceptance.py": "b73d9e48e9546b7a79c05813f36b6ee6a7fdb59af8054d56413c91c2f5d44cdd",
-    "scripts/product_journeys.py": "681e32487dab6ceb823d9f97f2c7de63fc4bab101ea42d23eed6be788176f1d6",
+    "scripts/product_journeys.py": "28e75cab8b0fc2418d3613a25b801a94424bc9f4e46bc0a0cf5692c6edf2cacb",
     "scripts/product_smoke.py": "266f71f82bbee1b508fcca96725bd95b51ac32b2fbeba4e6495dfc570092bdde",
     "scripts/release_gate.py": "6b895a394038c4455ecf5e0d958deba4bd06dfe555c6fa68fbe5c54b955484f3",
     "scripts/verify_manifest.py": "3cdf9241554fd61b57601d57dc8477c8d5aac7be5b88011e1201ad80e55f7509"

@@ -21,7 +21,7 @@ test:
 	pytest -v tests/
 
 lint:
-	flake8 src tests || true
+	flake8 src tests --max-line-length=120
 
 verify:
 	python scripts/verify_manifest.py

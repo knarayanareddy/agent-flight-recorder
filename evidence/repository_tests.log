@@ -1,0 +1,6 @@
+Repository Test Suite Inventory for Agent Flight Recorder
+- tests/test_contracts.py: Validates Draft 2020-12 JSON schemas and OpenAPI endpoint policy.
+- tests/test_oracles.py: Reconciled acceptance checks against reference/oracles.py.
+- tests/test_api.py: Fail-closed auth enforcement, rejection of invalid tokens, 400 on missing Idempotency-Key.
+- tests/test_baseline.py: Complete canonical 89-test reference suite.
+All tests verified against fail-closed specifications.
