@@ -1,0 +1,6 @@
+{
+  "name": "x",
+  "content_capture": "metadata_only",
+  "external_transfer": false,
+  "undeclared_field": "must be rejected"
+}

@@ -1,0 +1,31 @@
+version: baseline-runtime/1
+live_model_calls: false
+untrusted_code_execution: false
+public_uploads: false
+provider_credentials: false
+profiles:
+  demo:
+    authentication: synthetic_read_only
+    uploads: false
+    execution: fixture_playback_only
+    expose_non_loopback: false
+  private:
+    authentication: oidc_required
+    uploads: authenticated_only
+    execution: fixture_only
+    parser: docling_local_disabled_until_integration_gate
+    egress: deny
+limits:
+  event_batch_bytes: 1048576
+  event_batch_count: 500
+  pdf_bytes: 26214400
+  pdf_pages: 100
+  zip_compressed_bytes: 20971520
+  zip_expanded_bytes: 104857600
+  zip_files: 2000
+  heavy_jobs_per_project: 2
+  fixture_job_seconds: 300
+  parser_job_seconds: 1200
+  metadata_retention_days: 90
+  content_retention_days: 30
+  backup_retention_days: 30

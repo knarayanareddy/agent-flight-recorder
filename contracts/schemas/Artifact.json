@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Artifact.json",
+  "title": "Artifact",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "byte_size": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "media_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "ready",
+        "quarantined",
+        "deleting",
+        "deleted"
+      ]
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "synthetic",
+        "public_authorized",
+        "sensitive"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "id",
+    "project_id",
+    "sha256",
+    "byte_size",
+    "media_type",
+    "status",
+    "classification",
+    "created_at"
+  ],
+  "additionalProperties": false
+}

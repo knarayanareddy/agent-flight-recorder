@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/CaseCreate.json",
+  "title": "CaseCreate",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "run_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "visual",
+        "recorded"
+      ]
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "$ref": "Check.json"
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "fixture_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "run_id",
+    "run_revision",
+    "name",
+    "mode",
+    "checks",
+    "fixture_artifact_ids"
+  ],
+  "additionalProperties": false
+}

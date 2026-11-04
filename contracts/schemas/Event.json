@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Event.json",
+  "title": "Event",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "afr-event/1"
+    },
+    "event_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "run_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "producer_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "producer_seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "run.started",
+        "run.finished",
+        "model.requested",
+        "model.responded",
+        "tool.requested",
+        "tool.responded",
+        "tool.failed",
+        "capture.dropped",
+        "approval.decided"
+      ]
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "capture_policy_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "parent_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "payload": {
+      "$ref": "EventPayload.json"
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "run_id",
+    "producer_id",
+    "producer_seq",
+    "event_type",
+    "observed_at",
+    "capture_policy_id",
+    "payload"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/UploadFinalize.json",
+  "title": "UploadFinalize",
+  "type": "object",
+  "properties": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "byte_size": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "sha256",
+    "byte_size"
+  ],
+  "additionalProperties": false
+}

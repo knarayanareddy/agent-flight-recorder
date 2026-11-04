@@ -1,0 +1,104 @@
+{
+  "note": "Candidate exact direct dependencies resolved from registries; not installed/integration-tested or security-approved. Full transitive lock/SBOM required before release.",
+  "python": {
+    "fastapi": {
+      "version": "0.162.0",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/fastapi/0.162.0/"
+    },
+    "pydantic": {
+      "version": "2.14.2",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/pydantic/2.14.2/"
+    },
+    "SQLAlchemy": {
+      "version": "2.1.7",
+      "requires_python": ">=3.11",
+      "registry": "https://pypi.org/project/SQLAlchemy/2.1.7/"
+    },
+    "alembic": {
+      "version": "1.20.1",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/alembic/1.20.1/"
+    },
+    "psycopg": {
+      "version": "3.3.7",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/psycopg/3.3.7/"
+    },
+    "uvicorn": {
+      "version": "0.54.0",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/uvicorn/0.54.0/"
+    },
+    "authlib": {
+      "version": "1.9.3",
+      "requires_python": ">=3.10",
+      "registry": "https://pypi.org/project/authlib/1.9.3/"
+    },
+    "docling": {
+      "version": "2.146.0",
+      "requires_python": "<4.0,>=3.10",
+      "registry": "https://pypi.org/project/docling/2.146.0/"
+    },
+    "docling-core": {
+      "version": "2.105.0",
+      "requires_python": "<4.0,>=3.10",
+      "registry": "https://pypi.org/project/docling-core/2.105.0/"
+    }
+  },
+  "npm": {
+    "react": {
+      "version": "19.3.1",
+      "integrity": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "react-dom": {
+      "version": "19.3.1",
+      "integrity": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==",
+      "engines": null
+    },
+    "typescript": {
+      "version": "7.0.2",
+      "integrity": "sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==",
+      "engines": {
+        "node": ">=16.20.0"
+      }
+    },
+    "vite": {
+      "version": "8.3.5",
+      "integrity": "sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ==",
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      }
+    },
+    "@tanstack/react-query": {
+      "version": "5.105.3",
+      "integrity": "sha512-dj5hGWZmwoc9NG4enoXuYbiYwb5FxgJYPVv06eUgicMTfEMTRXn08Xv9D/r1V8TfjAv+BpxdvZFzJ1h3hSWZcQ==",
+      "engines": null
+    },
+    "@playwright/test": {
+      "version": "1.64.1",
+      "integrity": "sha512-IaYGml/nSOiZWROfPtuIL7neuu9qDOZ3TNvNljUIrhDMxiGTgPjzj/g9p9RxpS2tSepPDRY+UwAaEeiKtUvIAg==",
+      "engines": {
+        "node": ">=20"
+      }
+    },
+    "vitest": {
+      "version": "5.1.0",
+      "integrity": "sha512-MzmNFnrwa8v8lF1bLxw3UJ4EREwVOVb75VqJZmUDRjJ6EluK/x9th7qTbaeDk41WxE1GxWqmTXcdsfobfH5sOA==",
+      "engines": {
+        "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+      }
+    },
+    "axe-core": {
+      "version": "4.14.0",
+      "integrity": "sha512-9WTZxEjsZ7b13TH8JPmbV2z8CHbl80/2hm3XPEG4JgNdQLK81IBRXmSxHfMAOkSqQeRxT/0dwNDz2GOm3zzpcQ==",
+      "engines": {
+        "node": ">=4"
+      }
+    }
+  }
+}

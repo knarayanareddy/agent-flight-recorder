@@ -1,0 +1,86 @@
+{
+  "baseline": "0.2.0",
+  "production_ready": false,
+  "checks": {
+    "contract_suite": {
+      "status": "passed",
+      "evidence": "evidence/baseline-tests.xml",
+      "reason": "89 local schema/oracle tests passed on Python 3.13.16. Not application integration."
+    },
+    "postgres_migrations": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "application_e2e": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "authorization_matrix": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "oidc_integration": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "docling_integration": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Docling not installed/run; fixture metadata explicitly synthetic."
+    },
+    "executor_boundary": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "No Docker/runsc available in authoring environment; live code execution disabled."
+    },
+    "backup_restore": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "load_chaos": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "accessibility_manual": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "domain_holdout": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "statistical_review": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "independent_security_review": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "clean_room_agent_trial": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "No separate implementation agent/session available. Contract-consumer subprocess is not a substitute."
+    },
+    "release_images_sbom": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    },
+    "operator_signoff": {
+      "status": "not_run",
+      "evidence": null,
+      "reason": "Requires implementation or independent execution/review."
+    }
+  }
+}

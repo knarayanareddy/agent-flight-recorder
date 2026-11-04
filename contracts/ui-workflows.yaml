@@ -1,0 +1,214 @@
+version: ui-contract/1
+tokens:
+  spacing_px:
+  - 4
+  - 8
+  - 12
+  - 16
+  - 24
+  - 32
+  - 48
+  font_px:
+    body: 16
+    small: 14
+    h1: 30
+    h2: 24
+  colors:
+    text: '#17324D'
+    background: '#F5F8FB'
+    surface: '#FFFFFF'
+    primary: '#087A83'
+    danger: '#B42318'
+    warning: '#8A5800'
+  focus: '3px solid #087A83 with 2px offset'
+  breakpoints_px:
+  - 390
+  - 768
+  - 1280
+global_rules:
+- All forms derive structural validation from request schemas; server remains authoritative.
+- Source/replay/experiment mode badge always visible; simulation cannot look live.
+- Capture credentials and raw API keys never in browser/localStorage.
+- Conflict preserves unsaved edits and requires explicit rebase.
+- No color-only status; all charts have tables; all source views have text alternatives.
+- Keyboard order header -> filters -> main table/list -> selected detail -> actions.
+  Escape returns focus to opener.
+- Mobile uses source/form tabs, not side-by-side squeezed panes.
+- No optimistic mutation of immutable records; only draft text may autosave.
+- Approval dialogs state project, revision/digest, action, limits and effect; Cancel
+  is default focus.
+screens:
+- id: afr_runs
+  route: /afr/runs
+  title: AFR runs
+  role: viewer
+  layout:
+    desktop: navigation + header + 2-column evidence/list and detail
+    tablet: collapsible detail drawer
+    mobile: stacked read/act tabs with preserved selection
+  fields:
+  - state
+  - completeness
+  - verified_outcome
+  - event_count
+  - created_at
+  states: &id001
+    loading: skeleton; preserve stable navigation; aria-busy true
+    empty: specific empty message and permitted create/sample action
+    ready: data + revision + source/mode labels
+    denied: no content; request ID; do not suggest guessing IDs
+    error: safe problem summary + retry only if idempotent
+    conflict: show base/current; no automatic overwrite
+    offline: read-only cached view labeled stale; no hidden queued writes
+    partial: explicit omissions and blocked approval/export where required
+  actions:
+  - id: open_run
+    operation_id: afr_get_run
+    request_schema: null
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  - id: load_fixture
+    operation_id: local_fixture
+    request_schema: null
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  accessibility:
+  - heading hierarchy
+  - labeled controls
+  - focus return
+  - text alternative
+  - 200/400% zoom/reflow review
+  - screen-reader task test
+  required_tests:
+  - afr_runs_happy
+  - afr_runs_denied
+  - afr_runs_offline
+  - afr_runs_error
+  - afr_runs_keyboard
+- id: afr_run
+  route: /afr/runs/:run_id
+  title: Run investigation
+  role: analyst
+  layout:
+    desktop: navigation + header + 2-column evidence/list and detail
+    tablet: collapsible detail drawer
+    mobile: stacked read/act tabs with preserved selection
+  fields:
+  - producer_id
+  - producer_seq
+  - event_type
+  - observed_at
+  - payload
+  - capture_policy
+  states: *id001
+  actions:
+  - id: inspect_events
+    operation_id: afr_list_events
+    request_schema: null
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  - id: create_case
+    operation_id: afr_create_case
+    request_schema: CaseCreate
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  accessibility:
+  - heading hierarchy
+  - labeled controls
+  - focus return
+  - text alternative
+  - 200/400% zoom/reflow review
+  - screen-reader task test
+  required_tests:
+  - afr_run_happy
+  - afr_run_denied
+  - afr_run_offline
+  - afr_run_error
+  - afr_run_keyboard
+- id: afr_case
+  route: /afr/cases/new
+  title: Freeze regression case
+  role: analyst
+  layout:
+    desktop: navigation + header + 2-column evidence/list and detail
+    tablet: collapsible detail drawer
+    mobile: stacked read/act tabs with preserved selection
+  fields:
+  - name
+  - run_revision
+  - mode
+  - checks
+  - fixture_artifact_ids
+  states: *id001
+  actions:
+  - id: save_case
+    operation_id: afr_create_case
+    request_schema: CaseCreate
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  accessibility:
+  - heading hierarchy
+  - labeled controls
+  - focus return
+  - text alternative
+  - 200/400% zoom/reflow review
+  - screen-reader task test
+  required_tests:
+  - afr_case_happy
+  - afr_case_denied
+  - afr_case_offline
+  - afr_case_error
+  - afr_case_keyboard
+- id: afr_replay
+  route: /afr/replays/:id
+  title: Recorded replay
+  role: operator
+  layout:
+    desktop: navigation + header + 2-column evidence/list and detail
+    tablet: collapsible detail drawer
+    mobile: stacked read/act tabs with preserved selection
+  fields:
+  - mode
+  - state
+  - network_calls
+  - checks
+  - manifest_sha256
+  states: *id001
+  actions:
+  - id: start
+    operation_id: afr_create_replay
+    request_schema: ReplayCreate
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  - id: cancel
+    operation_id: foundation_cancel_job
+    request_schema: Empty
+    validation: schema + semantic preflight; mark errors adjacent to field
+    in_flight: disable duplicate submit; keep focus; show real status
+    success: persist returned revision; announce once; navigate only after response
+    failure: retain input; render safe Problem; conflict requires explicit resolution
+  accessibility:
+  - heading hierarchy
+  - labeled controls
+  - focus return
+  - text alternative
+  - 200/400% zoom/reflow review
+  - screen-reader task test
+  required_tests:
+  - afr_replay_happy
+  - afr_replay_denied
+  - afr_replay_offline
+  - afr_replay_error
+  - afr_replay_keyboard

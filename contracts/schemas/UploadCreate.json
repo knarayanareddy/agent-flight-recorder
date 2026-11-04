@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/UploadCreate.json",
+  "title": "UploadCreate",
+  "type": "object",
+  "properties": {
+    "filename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "application/pdf",
+        "application/json",
+        "application/zip",
+        "text/plain"
+      ]
+    },
+    "byte_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 104857600
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "synthetic",
+        "public_authorized",
+        "sensitive"
+      ]
+    }
+  },
+  "required": [
+    "filename",
+    "media_type",
+    "byte_size",
+    "sha256",
+    "classification"
+  ],
+  "additionalProperties": false
+}

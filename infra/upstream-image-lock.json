@@ -1,0 +1,16 @@
+{
+  "library/postgres": {
+    "tag": "16",
+    "digest": "sha256:5db6dac2ef5dcff512f4f00a009c3c332b9f2f28f24277175bf3e4a3d02ef83a",
+    "image": "postgres@sha256:5db6dac2ef5dcff512f4f00a009c3c332b9f2f28f24277175bf3e4a3d02ef83a",
+    "tested": false,
+    "note": "Registry digest resolved; image not pulled or run."
+  },
+  "library/caddy": {
+    "tag": "2",
+    "digest": "sha256:36c24ad91a7ff7bc4c87fe22bfa8df3c4b18da0773d73fc12ee2c52b98c0bb7e",
+    "image": "caddy@sha256:36c24ad91a7ff7bc4c87fe22bfa8df3c4b18da0773d73fc12ee2c52b98c0bb7e",
+    "tested": false,
+    "note": "Registry digest resolved; image not pulled or run."
+  }
+}

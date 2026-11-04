@@ -1,0 +1,209 @@
+{
+  "note": "Research sources, not validated runtime locks.",
+  "sources": [
+    {
+      "repo": "langfuse/langfuse",
+      "url": "https://github.com/langfuse/langfuse",
+      "sha": "db598ac1277ca2e70d8911b47169e9040dabdcf2",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "description": "\ud83e\udea2 Open source agent evals & observability: Trace, evaluate, and improve LLM applications with one open platform.",
+      "captured": "2026-11-03T18:35:15.182491+00:00"
+    },
+    {
+      "repo": "arize-ai/phoenix",
+      "url": "https://github.com/Arize-ai/phoenix",
+      "sha": "5835389ca5a29a8505cb827a6e59796d3f8f0138",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "description": "AI Observability & Evaluation",
+      "captured": "2026-11-03T18:35:15.164258+00:00"
+    },
+    {
+      "repo": "AgentOps-AI/agentops",
+      "url": "https://github.com/AgentOps-AI/agentops",
+      "sha": "f8e907b92dabe47232978023fdcb01e2a7d4b752",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "description": "Python SDK for AI agent monitoring, LLM cost tracking, benchmarking, and more. Integrates with most LLMs and agent frameworks including CrewAI, Agno, OpenAI Agents SDK, Langchain, Autogen, AG2, and CamelAI",
+      "captured": "2026-11-03T18:35:15.331907+00:00"
+    },
+    {
+      "repo": "UKGovernmentBEIS/inspect_ai",
+      "url": "https://github.com/UKGovernmentBEIS/inspect_ai",
+      "sha": "882a5db3af19eb9b311e24d2395d8443df45179f",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "description": "Inspect: A framework for large language model evaluations",
+      "captured": "2026-11-03T18:35:15.155940+00:00"
+    },
+    {
+      "repo": "promptfoo/promptfoo",
+      "url": "https://github.com/promptfoo/promptfoo",
+      "sha": "f2b012e3c9f9ffb7b23edf4cf88ea63febf72f5a",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, DeepSeek, and more. Simple declarative configs with command line and CI/CD integration.  Used by OpenAI and Anthropic.",
+      "captured": "2026-11-03T18:35:15.166946+00:00"
+    },
+    {
+      "repo": "NVIDIA/SkillEvaluator",
+      "url": "https://github.com/NVIDIA/SkillEvaluator",
+      "sha": "8532d57b7067700a16272bf0a0e46a9d4dba302d",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "Multi-tier framework for evaluating AI agent skills with quality gates, semantic overlap detection, synthetic evaluation dataset generation, and live agent evaluation that measures how skills affect agent behavior.",
+      "captured": "2026-11-03T18:35:15.212304+00:00"
+    },
+    {
+      "repo": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills",
+      "sha": "ca45fc496a3436251f191354091d557da31c15b5",
+      "license": null,
+      "description": "Public repository for Agent Skills",
+      "captured": "2026-11-03T18:35:15.215759+00:00"
+    },
+    {
+      "repo": "docling-project/docling",
+      "url": "https://github.com/docling-project/docling",
+      "sha": "0634e2f74561e5950d69b2cace67ef95400506ad",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "description": "Get your documents ready for gen AI",
+      "captured": "2026-11-03T18:35:15.255219+00:00"
+    },
+    {
+      "repo": "docling-project/docling-core",
+      "url": "https://github.com/docling-project/docling-core",
+      "sha": "1517ab72757163d751750b42c87c4049290bd166",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "description": "Docling core data types and transformations",
+      "captured": "2026-11-03T18:35:15.774194+00:00"
+    },
+    {
+      "repo": "Unstructured-IO/unstructured",
+      "url": "https://github.com/Unstructured-IO/unstructured",
+      "sha": "d505b6010964de066a33fcce716a644e5887e7d3",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "Convert documents to structured data effortlessly. Unstructured is open-source ETL solution for transforming complex documents into clean, structured formats for language models.  Visit our website to learn more about our enterprise grade Platform product for production grade workflows, partitioning, enrichments, chunking and embedding.",
+      "captured": "2026-11-03T18:35:15.779263+00:00"
+    },
+    {
+      "repo": "VikParuchuri/marker",
+      "url": "https://github.com/datalab-to/marker",
+      "sha": "71dd5fd7e51ab24f8624b6ba2fcb6014b4e40ed4",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "Convert PDF to markdown + JSON quickly with high accuracy",
+      "captured": "2026-11-03T18:35:16.191966+00:00"
+    },
+    {
+      "repo": "HumanSignal/label-studio",
+      "url": "https://github.com/HumanSignal/label-studio",
+      "sha": "a5b3125889f89929892b02e52c6988affb3e7e2f",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "Label Studio is a multi-type data labeling and annotation tool with standardized output format",
+      "captured": "2026-11-03T18:35:15.755392+00:00"
+    },
+    {
+      "repo": "infiniflow/ragflow",
+      "url": "https://github.com/infiniflow/ragflow",
+      "sha": "2c4bbbc720fe24bd7ac509ab989325d4c1e8e532",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "RAGFlow is an agent-native database: a Retrieval-Augmented Generation (RAG) engine that grew into context infrastructure.",
+      "captured": "2026-11-03T18:35:15.916256+00:00"
+    },
+    {
+      "repo": "explodinggradients/ragas",
+      "url": "https://github.com/vibrantlabsai/ragas",
+      "sha": "298b68274234c060deacab3cf5fb52aa3a20e885",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": "Supercharge Your LLM Application Evaluations \ud83d\ude80",
+      "captured": "2026-11-03T18:35:16.051884+00:00"
+    },
+    {
+      "repo": "open-telemetry/semantic-conventions-genai",
+      "url": "https://github.com/open-telemetry/semantic-conventions-genai",
+      "sha": "95aff9cdf605bbc7d7e8f7c4745a693bd0c4eea8",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "description": null,
+      "captured": "2026-11-03T18:35:15.920898+00:00"
+    }
+  ]
+}

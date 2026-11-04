@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/Upload.json",
+  "title": "Upload",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "artifact_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "put_path": {
+      "type": "string",
+      "pattern": "^/api/v1/"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "maximum_bytes": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "id",
+    "artifact_id",
+    "put_path",
+    "expires_at",
+    "maximum_bytes"
+  ],
+  "additionalProperties": false
+}

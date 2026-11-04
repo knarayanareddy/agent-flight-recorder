@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baseline.invalid/schemas/BatchReceipt.json",
+  "title": "BatchReceipt",
+  "type": "object",
+  "properties": {
+    "accepted": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "duplicates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "accepted",
+    "duplicates",
+    "request_id"
+  ],
+  "additionalProperties": false
+}

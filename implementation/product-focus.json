@@ -1,0 +1,22 @@
+{
+  "product": "Agent Flight Recorder",
+  "product_ticket_ids": [
+    "B06"
+  ],
+  "shared_or_qualification_ticket_ids": [
+    "B00",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "B14",
+    "B15"
+  ],
+  "authority": "../05_Shared_Baseline/implementation-plan.json",
+  "note": "Organizational focus only. Original dependencies and release gates unchanged; cross-product qualification tickets must not be silently marked complete for a single product."
+}

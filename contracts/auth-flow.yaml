@@ -1,0 +1,45 @@
+version: auth-flow/1
+note: Browser identity endpoints complement domain OpenAPI. No passwords/public registration.
+routes:
+  GET /api/v1/auth/login:
+    public: true
+    query: {return_to: 'optional same-origin relative route, max 512 chars, default /'}
+    success: '302 to configured IdP authorization endpoint; state+nonce+PKCE S256'
+    storage: 'server-side 10-minute one-use auth transaction; secure SameSite=Lax HttpOnly transient cookie'
+    invalid_return_to: 400
+  GET /api/v1/auth/callback:
+    public: true
+    query: {code: 'required bounded authorization code', state: 'required one-use transaction match'}
+    success: '303 to stored allowlisted return_to; rotate session identifier; consume transaction'
+    validate: ['issuer', 'audience', 'signature from approved JWKS', 'nonce', 'expiry', 'state', 'PKCE', 'preprovisioned subject']
+    failure: '400 generic auth_failed or 403 subject_not_authorized; no tokens/code in logs'
+  GET /api/v1/auth/session:
+    authentication: session_cookie_only
+    success: '200 JSON actor_id, organization_id, explicitly authorized projects/roles, expires_at, csrf_token'
+    denied: 401
+    cache: no-store
+  POST /api/v1/auth/logout:
+    authentication: session_cookie_only
+    headers: ['X-CSRF-Token', 'Idempotency-Key']
+    success: '204; revoke server-side session and clear cookie; no arbitrary post-logout redirect'
+    csrf_failure: 403
+cookies:
+  name: __Host-baseline-session
+  secure: true
+  httponly: true
+  samesite: Lax
+  path: /
+  domain_attribute: forbidden
+session:
+  idle_expiry_minutes: 30
+  absolute_expiry_hours: 8
+  membership_cache_max_seconds: 30
+  rotate_on_login: true
+  browser_token_storage: forbidden
+  csrf: 'Per-session token + exact Origin checks on all cookie-authenticated mutations; never required for scoped API-key machine requests.'
+JWKS:
+  refresh: 'Cache for max 1 hour; refresh on unknown kid with rate limit; no arbitrary jku/x5u URLs from token header.'
+  fail_closed: true
+health:
+  GET /health/live: '200 process alive; 503 not live; no dependency details'
+  GET /health/ready: '200 required migration/DB/artifact/identity ready; 503 safe unavailable; no secret/config dump'

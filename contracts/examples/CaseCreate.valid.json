@@ -1,0 +1,14 @@
+{
+  "run_id": "00000000-0000-4000-8000-000000000001",
+  "run_revision": 1,
+  "name": "x",
+  "mode": "visual",
+  "checks": [
+    {
+      "kind": "json_equals",
+      "path": "x",
+      "expected": "x"
+    }
+  ],
+  "fixture_artifact_ids": []
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "operation": "foundation_create_project",
+    "method": "POST",
+    "path": "/api/v1/projects",
+    "role": "admin",
+    "if_match": false,
+    "request": "ProjectCreate",
+    "response": "Project",
+    "success": 201
+  },
+  {
+    "operation": "foundation_list_projects",
+    "method": "GET",
+    "path": "/api/v1/projects",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "ProjectPage",
+    "success": 200
+  },
+  {
+    "operation": "foundation_create_upload",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/uploads",
+    "role": "analyst",
+    "if_match": false,
+    "request": "UploadCreate",
+    "response": "Upload",
+    "success": 201
+  },
+  {
+    "operation": "foundation_put_upload",
+    "method": "PUT",
+    "path": "/api/v1/uploads/{upload_id}/bytes",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Empty",
+    "success": 200
+  },
+  {
+    "operation": "foundation_finalize_upload",
+    "method": "POST",
+    "path": "/api/v1/uploads/{upload_id}:finalize",
+    "role": "analyst",
+    "if_match": false,
+    "request": "UploadFinalize",
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_get_artifact",
+    "method": "GET",
+    "path": "/api/v1/artifacts/{artifact_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_download_artifact",
+    "method": "GET",
+    "path": "/api/v1/artifacts/{artifact_id}/bytes",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Artifact",
+    "success": 200
+  },
+  {
+    "operation": "foundation_get_job",
+    "method": "GET",
+    "path": "/api/v1/jobs/{job_id}",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "Job",
+    "success": 200
+  },
+  {
+    "operation": "foundation_cancel_job",
+    "method": "POST",
+    "path": "/api/v1/jobs/{job_id}:cancel",
+    "role": "operator",
+    "if_match": false,
+    "request": "Empty",
+    "response": "Job",
+    "success": 202
+  },
+  {
+    "operation": "afr_ingest_events",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/events:batch",
+    "role": "operator",
+    "if_match": false,
+    "request": "EventBatch",
+    "response": "BatchReceipt",
+    "success": 202
+  },
+  {
+    "operation": "afr_list_runs",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/afr/runs",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "RunPage",
+    "success": 200
+  },
+  {
+    "operation": "afr_get_run",
+    "method": "GET",
+    "path": "/api/v1/afr/runs/{run_id}",
+    "role": "viewer",
+    "if_match": false,
+    "request": null,
+    "response": "Run",
+    "success": 200
+  },
+  {
+    "operation": "afr_list_events",
+    "method": "GET",
+    "path": "/api/v1/afr/runs/{run_id}/events",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "EventPage",
+    "success": 200
+  },
+  {
+    "operation": "afr_create_case",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/cases",
+    "role": "analyst",
+    "if_match": false,
+    "request": "CaseCreate",
+    "response": "Case",
+    "success": 201
+  },
+  {
+    "operation": "afr_get_case",
+    "method": "GET",
+    "path": "/api/v1/afr/cases/{case_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "Case",
+    "success": 200
+  },
+  {
+    "operation": "afr_create_replay",
+    "method": "POST",
+    "path": "/api/v1/projects/{project_id}/afr/replays",
+    "role": "operator",
+    "if_match": false,
+    "request": "ReplayCreate",
+    "response": "Job",
+    "success": 202
+  },
+  {
+    "operation": "afr_get_replay",
+    "method": "GET",
+    "path": "/api/v1/afr/replays/{replay_id}",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "ReplayResult",
+    "success": 200
+  },
+  {
+    "operation": "afr_list_cases",
+    "method": "GET",
+    "path": "/api/v1/projects/{project_id}/afr/cases",
+    "role": "analyst",
+    "if_match": false,
+    "request": null,
+    "response": "CasePage",
+    "success": 200
+  }
+]
