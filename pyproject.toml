@@ -7,7 +7,7 @@ name = "agent-flight-recorder"
 version = "0.2.0"
 description = "Deterministic black-box recording, run inspection, side-effect sandboxing, and trace-to-regression test generator for autonomous AI agents."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.110.0",
     "uvicorn[standard]>=0.28.0",
