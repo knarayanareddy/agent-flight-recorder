@@ -10,29 +10,31 @@
 
 ---
 
-## Design Patch: Organization-Scoped Project Creation Idempotency
-- **Table**: `core.idempotency`
-- **Original Schema Constraint**:
-  In early scaffold definitions, `core.idempotency` declared `project_id uuid NOT NULL REFERENCES core.projects`.
-- **Architectural Gap**:
-  Project creation (`POST /api/v1/projects`) is an organization-level operation executed by Organization Admins *before* any project workspace exists. A foreign key constraint requiring a non-null `project_id` on all idempotency records prevented registering or enforcing idempotency locks during project creation requests.
-- **Reviewed Design Correction**:
-  ```sql
-  CREATE TABLE core.idempotency(
-      organization_id uuid REFERENCES core.organizations,
-      project_id uuid REFERENCES core.projects,
-      actor_id uuid NOT NULL,
-      route text NOT NULL,
-      key uuid NOT NULL,
-      request_sha256 text NOT NULL,
-      response_status integer NOT NULL,
-      response_body jsonb NOT NULL,
-      expires_at timestamptz NOT NULL,
-      PRIMARY KEY(actor_id, route, key),
-      CHECK(project_id IS NOT NULL OR organization_id IS NOT NULL)
-  );
-  ```
-- **Concurrency & Locking Rules (for B02 Integration)**:
-  - Idempotency records for project creation are keyed by `(actor_id, route, key)` scoped to `organization_id`.
-  - Mutating operations must acquire an advisory lock or insert in `in_progress` state prior to execution to prevent duplicate concurrent project fabrication.
-  - Expired records are pruned by background lifecycle tasks based on `expires_at`.
+## Design Patch: Scoped Idempotency (project mutations vs. project creation)
+
+**Approved split (replaces the nullable compromise):**
+
+1. `core.idempotency` — ordinary project-scoped mutations only:
+   ```sql
+   PRIMARY KEY(project_id, actor_id, route, key)
+   ```
+   `project_id` is NOT NULL; every record is bound to an existing project and enforced by project RLS (`project_id = current_setting('baseline.project_id', true)`).
+
+2. `core.project_creation_idempotency` — project creation only (organization-scoped, because no project row exists yet):
+   ```sql
+   PRIMARY KEY(organization_id, actor_id, route, key)
+   ```
+   Actor and organization derive from verified identity/membership, never an untrusted header. Enforced by organization RLS (`organization_id = current_setting('baseline.organization_id', true)`).
+
+**Semantics (both tables):**
+- Same scoped key `(scope_id, actor_id, route, key)` + same normalized request → replay the original stored response (status + body).
+- Same scoped key + different normalized request → 409 conflict, no writes.
+- TTL 24h via `expires_at`; expired records pruned by background lifecycle tasks.
+- Mutating operations acquire an advisory lock (or insert an `in_progress` record) before execution so concurrent identical requests produce one result; rollback must not strand a fabricated success.
+- Authenticate and authorize before replaying a stored response. No dummy projects, no scope-free uniqueness, no RLS bypass, no weakened FKs; runtime role is never table owner/superuser/BYPASSRLS.
+
+**Concurrency & Locking Rules (for B02 Integration):**
+- Project creation: insert into `core.project_creation_idempotency` within the same transaction that creates the project, audit row, and replay record — all-or-nothing.
+- Concurrent identical requests must create exactly one project; a loser replos? no — replays the winner's stored response.
+- Expired records are pruned by background lifecycle tasks based on `expires_at`.
+- Pooled connection context (`set_config(... true)`) must be reset after each transaction and never persist across pool reuse.

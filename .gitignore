@@ -12,6 +12,10 @@ build/
 dist/
 *.egg-info/
 
+# Node / frontend
+node_modules/
+apps/web/dist/
+
 # Testing & Coverage
 .cache
 .pytest_cache/

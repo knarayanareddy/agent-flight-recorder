@@ -28,6 +28,10 @@ END $$;
 ALTER TABLE core.projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE core.projects FORCE ROW LEVEL SECURITY;
 CREATE POLICY projects_org_scope ON core.projects USING (organization_id=nullif(current_setting('baseline.organization_id',true),'')::uuid) WITH CHECK (organization_id=nullif(current_setting('baseline.organization_id',true),'')::uuid);
+-- Project-creation idempotency is organization-scoped: no project exists yet to key against.
+ALTER TABLE core.project_creation_idempotency ENABLE ROW LEVEL SECURITY;
+ALTER TABLE core.project_creation_idempotency FORCE ROW LEVEL SECURITY;
+CREATE POLICY project_creation_org_scope ON core.project_creation_idempotency USING (organization_id=nullif(current_setting('baseline.organization_id',true),'')::uuid) WITH CHECK (organization_id=nullif(current_setting('baseline.organization_id',true),'')::uuid);
 -- The application must set project/organization context transaction-locally; pooled context MUST NOT persist.
 -- RLS is defense in depth against query bugs, NOT authorization against a compromised trusted application.
 -- Dispatcher iterates authorized project scopes supplied by the trusted scheduler; no global BYPASSRLS worker.

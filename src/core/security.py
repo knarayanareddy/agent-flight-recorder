@@ -79,8 +79,11 @@ def redact_metadata(value: Dict[str, Any]) -> Dict[str, Any]:
 
 def verify_token(token: str) -> Optional[UserContext]:
     """Verify bearer token against cryptographic signature / OIDC claims.
-    Fail-closed: Returns None in production runtime until B03 identity
-    integration is configured. Never accepts static test bypass credentials.
-    Synthetic identities are injected exclusively via test dependency overrides.
+    Fail-closed: Returns None in production runtime unless an OIDC verifier
+    has been explicitly configured (test/dev only). Never accepts static test
+    bypass credentials. Synthetic identities are injected exclusively via test
+    dependency overrides.
     """
-    return None
+    from src.core.oidc import verify_token_via_oidc  # lazy: avoids import cycle
+
+    return verify_token_via_oidc(token)
